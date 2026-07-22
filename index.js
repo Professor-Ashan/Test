@@ -3,85 +3,17 @@
    * Contact Me on 923271054080
 */
 
-const express = require('express');
-const http = require('http');
-const socketIo = require('socket.io');
-const fs = require('fs-extra');
+const fs = require('fs');
 const path = require('path');
+const readline = require('readline');
 const chalk = require('chalk');
 const figlet = require('figlet');
 
+const AUTH_FILE = './auth.json';
 const PAIRING_DIR = './kingbadboitimewisher/pairing/';
 const startpairing = require('./pair');
 
-const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
-const PORT = process.env.PORT || 3000;
-
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-const userSockets = {};
-
-// Serve the web pairing page
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'OK', uptime: process.uptime() });
-});
-
-// Socket.io for web pairing
-io.on('connection', (socket) => {
-    console.log(chalk.blue('🌐 New web connection established'));
-
-    socket.on('set-user', (userId) => {
-        userSockets[userId] = socket.id;
-        console.log(chalk.green(`👤 User set: ${userId}`));
-    });
-
-    socket.on('pair-request', async ({ userId, number }) => {
-        console.log(chalk.cyan(`📲 Pairing request for ${number} from user ${userId}`));
-        try {
-            // Trigger the pairing process
-            await startpairing(number);
-            
-            // Watch for the pairing code in pairing.json
-            const checkPairingCode = setInterval(() => {
-                const pairingFile = path.join(PAIRING_DIR, 'pairing.json');
-                if (fs.existsSync(pairingFile)) {
-                    try {
-                        const data = JSON.parse(fs.readFileSync(pairingFile, 'utf8'));
-                        if (data.number === number && data.code) {
-                            socket.emit('pairing-code', data.code);
-                            clearInterval(checkPairingCode);
-                            console.log(chalk.green(`🔑 Pairing code sent to web: ${data.code}`));
-                            // Optional: remove file after sending code
-                            // fs.removeSync(pairingFile);
-                        }
-                    } catch (e) {}
-                }
-            }, 1000);
-
-            // Timeout after 60 seconds
-            setTimeout(() => clearInterval(checkPairingCode), 60000);
-
-        } catch (error) {
-            console.log(chalk.red(`❌ Pairing error: ${error.message}`));
-            socket.emit('pair-error', error.message);
-        }
-    });
-
-    socket.on('disconnect', () => {
-        for (const [userId, socketId] of Object.entries(userSockets)) {
-            if (socketId === socket.id) {
-                delete userSockets[userId];
-                break;
-            }
-        }
-    });
-});
 
 const autoLoadPairs = async () => {
     console.log(chalk.cyan('🔄 Auto-loading all paired users...'));
@@ -102,64 +34,183 @@ const autoLoadPairs = async () => {
     }
 
     console.log(chalk.green(`✅ Found ${pairedUsers.length} paired users. Starting connections...`));
-    
+    console.log(chalk.blue('⏳ Waiting 4 seconds before starting connections...'));
+    await delay(4000);
+
     for (let i = 0; i < pairedUsers.length; i++) {
         const userNumber = pairedUsers[i];
+        
         try {
             console.log(chalk.blue(`🔄 Connecting user ${i + 1}/${pairedUsers.length}: ${userNumber}`));
             await startpairing(userNumber);
-            if (i < pairedUsers.length - 1) await delay(2000);
+            console.log(chalk.green(`✅ Connected successfully: ${userNumber}`));
+            
+            if (i < pairedUsers.length - 1) {
+                console.log(chalk.blue('⏳ Waiting 4 seconds before next connection...'));
+                await delay(4000);
+            }
         } catch (error) {
             console.log(chalk.red(`❌ Failed for ${userNumber}: ${error.message}`));
+            
+            if (i < pairedUsers.length - 1) {
+                console.log(chalk.blue('⏳ Waiting 4 seconds before retry...'));
+                await delay(4000);
+            }
         }
     }
+
+    console.log(chalk.green('✅ All paired users processed.'));
+    console.log(chalk.blue('⏳ Waiting 4 seconds before continuing...'));
+    await delay(4000);
 };
 
 const initializeBot = async () => {
     console.clear();
-    console.log(chalk.cyan(figlet.textSync('DANGEROUS', {
+    console.log(chalk.cyan(figlet.textSync('SHADOW', {
         font: 'Standard',
         horizontalLayout: 'default',
         verticalLayout: 'default'
     })));
     
     console.log(chalk.yellow('\n═══════════════════════════════════════════════'));
-    console.log(chalk.green('   𝙳𝙰𝙽𝙶𝙴𝚁𝙾𝚄𝚂 𝚆𝙴𝙱 𝙿𝙰𝙸𝚁𝙸𝙽𝙶 𝚂𝚈𝚂𝚃𝙴𝙼       '));
+    console.log(chalk.green('   𝙳𝙰𝙽𝙶𝙴𝚁𝙾𝚄𝚂 𝙿𝙰𝙸𝚁𝙸𝙽𝙶 𝚂𝚈𝚂𝚃𝙴𝙼       '));
     console.log(chalk.yellow('═══════════════════════════════════════════════\n'));
-
-    server.listen(PORT, () => {
-        console.log(chalk.green(`🌍 Web Pairing Server running on port ${PORT}`));
-    });
 
     await autoLoadPairs();
     launchBot();
 };
 
 function launchBot() {
+    console.clear();
     console.log(chalk.green('🚀 Starting Dangerous Md System...\n'));
+
+    let telegramLoaded = false;
+    let whatsappLoaded = false;
+
+    // Load Telegram bot (bot.js)
+    const botPath = path.join(__dirname, 'bot.js');
+    if (fs.existsSync(botPath)) {
+        try {
+            console.log(chalk.blue('📱 Loading Telegram pairing system...'));
+            require('./bot');
+            telegramLoaded = true;
+            console.log(chalk.green('✅Dangerous Md Bot Loaded Successfully!'));
+        } catch (error) {
+            console.log(chalk.red('❌ Failed to load Telegram bot (bot.js):'));
+            console.log(chalk.red('   Error:', error.message));
+            
+            if (error.stack) {
+                console.log(chalk.gray('   Stack:', error.stack.split('\n')[1].trim()));
+            }
+            
+            console.log(chalk.yellow('⚠️  Continuing without Telegram bot...\n'));
+        }
+    } else {
+        console.log(chalk.yellow('⚠️  bot.js not found, skipping Telegram bot...\n'));
+    }
+
+    // Load WhatsApp commands (drenox.js)
     const drenoxPath = path.join(__dirname, 'drenox.js');
     if (fs.existsSync(drenoxPath)) {
         try {
-            require('./drenox');
+            console.log(chalk.blue('💬 Loading WhatsApp commands system...'));
+            const drenoxModule = require('./drenox');
+            whatsappLoaded = true;
             console.log(chalk.green('✅ WhatsApp commands loaded successfully!'));
+            
         } catch (error) {
-            console.log(chalk.red('❌ Failed to load WhatsApp commands (drenox.js)'));
+            console.log(chalk.red('❌ Failed to load WhatsApp commands (drenox.js):'));
+            console.log(chalk.red('   Error:', error.message));
+            
+            if (error.stack) {
+                console.log(chalk.gray('   Stack:', error.stack.split('\n')[1].trim()));
+            }
+            
+            console.log(chalk.yellow('⚠️  Continuing without WhatsApp commands...\n'));
         }
+    } else {
+        console.log(chalk.yellow('⚠️  drenox.js not found, skipping WhatsApp commands...\n'));
     }
 
+    // Summary
     console.log(chalk.cyan('\n═══════════════════════════════════════════════'));
     console.log(chalk.bold.white('DANGEROUS MD BOT INITIALIZATION SUMMARY          '));
     console.log(chalk.cyan('═══════════════════════════════════════════════'));
-    console.log(chalk.green('✅ Web Pairing System: Active'));
-    console.log(chalk.red('❌ Telegram Pairing: Disabled'));
-    console.log(chalk.green('✅ WhatsApp Commands: Active'));
+    console.log(telegramLoaded ? chalk.green('✅ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ тɛℓɛɢяαм вσт: Active') : chalk.red('❌ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ тɛℓɛɢяαм вσт : Inactive'));
+    console.log(whatsappLoaded ? chalk.green('✅ WhatsApp Commands: Active') : chalk.red('❌ WhatsApp Commands: Inactive'));
     console.log(chalk.cyan('═══════════════════════════════════════════════\n'));
 
-    process.on('unhandledRejection', () => {});
-    process.on('uncaughtException', () => {});
+    if (!telegramLoaded && !whatsappLoaded) {
+        console.log(chalk.red('⚠️  Warning: No bot systems loaded! Check your files.\n'));
+    } else {
+        console.log(chalk.green('✅ Dangerous System Is Ready And Running!\n'));
+    }
+
+    // Error handlers
+    const ignoredErrors = [
+        'Socket connection timeout',
+        'EKEYTYPE',
+        'item-not-found',
+        'rate-overlimit',
+        'Connection Closed',
+        'Timed Out',
+        'Value not found'
+    ];
+
+    process.on('unhandledRejection', (reason, promise) => {
+        if (ignoredErrors.some(e => String(reason).includes(e))) return;
+        
+        console.log(chalk.red('\n⚠️  Unhandled Promise Rejection:'));
+        console.log(chalk.yellow('Reason:'), reason);
+    });
+
+    process.on('uncaughtException', (error) => {
+        if (ignoredErrors.some(e => String(error).includes(e))) return;
+        
+        console.log(chalk.red('\n❌ Uncaught Exception:'));
+        console.log(chalk.yellow('Error:'), error.message);
+        if (error.stack) {
+            console.log(chalk.gray(error.stack));
+        }
+    });
+
+    const originalConsoleError = console.error;
+    console.error = function (message, ...optionalParams) {
+        if (typeof message === 'string' && ignoredErrors.some(e => message.includes(e))) {
+            return;
+        }
+        originalConsoleError.apply(console, [message, ...optionalParams]);
+    };
+
+    const originalStderrWrite = process.stderr.write;
+    process.stderr.write = function (message, encoding, fd) {
+        if (typeof message === 'string' && ignoredErrors.some(e => message.includes(e))) {
+            return;
+        }
+        originalStderrWrite.apply(process.stderr, arguments);
+    };
+
     console.log(chalk.blue('📊 Bot monitoring active...'));
+    console.log(chalk.gray('Press Ctrl+C to stop the bot\n'));
 }
 
-process.on('SIGINT', () => process.exit(0));
+// Graceful shutdown
+process.on('SIGINT', () => {
+    console.log(chalk.yellow('\n\n⚠️  Shutting down gracefully...'));
+    console.log(chalk.green('👋 Goodbye!'));
+    process.exit(0);
+});
 
-initializeBot().catch(() => process.exit(1));
+process.on('SIGTERM', () => {
+    console.log(chalk.yellow('\n\n⚠️  Received termination signal...'));
+    process.exit(0);
+});
+
+initializeBot().catch((error) => {
+    console.log(chalk.red('\n❌ Fatal error during initialization:'));
+    console.log(chalk.yellow('Error:'), error.message);
+    if (error.stack) {
+        console.log(chalk.gray(error.stack));
+    }
+    process.exit(1);
+});
