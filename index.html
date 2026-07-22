@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SYED MINI :: TERMINAL</title>
+<title>DANGEROUS MD :: TERMINAL</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -92,7 +92,7 @@
     display:flex;justify-content:space-between;align-items:center;
   }
   .modal-head h2{font-size:1rem;letter-spacing:1px;color:var(--green);font-weight:600;}
-  .modal-head h2::before{content:"root@syed:~$ ";color:var(--muted);}
+  .modal-head h2::before{content:"root@dangerous:~$ ";color:var(--muted);}
   .modal-close{background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;line-height:1;}
   .modal-close:hover{color:var(--green);}
   .modal-body{padding:22px;}
@@ -283,10 +283,8 @@
     <div class="modal-body">
       <p>// Follow the official channels below to unlock pairing access and receive live updates.</p>
       <div class="channel-list">
-        <a href="https://whatsapp.com/channel/0029VaGiJKfIiRoybPBMTy38" target="_blank" class="channel-item"><i class="fab fa-whatsapp"></i><span>WhatsApp Channel — Updates</span></a>
-        <a href="https://whatsapp.com/channel/0029Vb7SDZ31iUxhzG0W4t1M" target="_blank" class="channel-item"><i class="fab fa-whatsapp"></i><span>WhatsApp Channel — Support</span></a>
-        <a href="https://www.youtube.com/@Teamsyedhaker" target="_blank" class="channel-item"><i class="fab fa-youtube"></i><span>YouTube Channel</span></a>
-        <a href="https://whatsapp.com/channel/0029VbCkaqb5fM5VgpvRJc2Y" target="_blank" class="channel-item"><i class="fab fa-whatsapp"></i><span>WhatsApp Channel — Announcements</span></a>
+        <a href="https://whatsapp.com/channel/0029Vb8XwkCA89MpQ00xrw20" target="_blank" class="channel-item"><i class="fab fa-whatsapp"></i><span>WhatsApp Channel — Updates</span></a>
+        <a href="https://www.youtube.com/@Professor-Ashan" target="_blank" class="channel-item"><i class="fab fa-youtube"></i><span>YouTube Channel</span></a>
       </div>
       <button class="btn" id="confirmFollow"><i class="fas fa-check"></i> I've followed all channels</button>
     </div>
@@ -297,8 +295,7 @@
   <div class="brand">
     <div class="mark">$_</div>
     <div>
-      <div class="name">SYED MINI MD</div>
-      <div class="tag">whatsapp automation</div>
+      <div class="name">DANGEROUS MD</div>
     </div>
   </div>
   <div class="nav-links" id="navLinks">
@@ -311,8 +308,8 @@
 
 <header>
   <div class="eyebrow"><span class="pulse"></span> SESSION READY // NODE ONLINE</div>
-  <h1><span class="glitch-wrap" data-text="SYED MINI MD">SYED MINI MD</span></h1>
-  <p class="sub">A fast, minimal WhatsApp automation core — built &amp; maintained by <strong>SYED TECH</strong>.</p>
+  <h1><span class="glitch-wrap" data-text="DANGEROUS MD">DANGEROUS MD</span></h1>
+  <p class="sub">A fast, minimal WhatsApp automation core — built &amp; maintained by <strong>SHADOW OFFICIAL</strong>.</p>
 
   <div class="stats-row">
     <div class="stat-card"><i class="fas fa-signal"></i><div><div class="stat-value" id="activeSockets">0</div><div class="stat-label">Active Sockets</div></div></div>
@@ -364,15 +361,13 @@
   <section id="links" class="panel" data-label="./links">
     <h2><i class="fas fa-external-link-alt"></i> Links</h2>
     <div class="link-grid">
-      <a class="btn btn-outline" href="https://whatsapp.com/channel/0029VaGiJKfIiRoybPBMTy38" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp Channel</a>
-      <a class="btn btn-outline" href="https://whatsapp.com/channel/0029Vb7SDZ31iUxhzG0W4t1M" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp Channel</a>
-      <a class="btn btn-outline" href="https://www.youtube.com/@Teamsyedhaker" target="_blank"><i class="fab fa-youtube"></i> YouTube Channel</a>
-      <a class="btn btn-outline" href="https://whatsapp.com/channel/0029VbCkaqb5fM5VgpvRJc2Y" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp Channel</a>
+      <a class="btn btn-outline" href="https://whatsapp.com/channel/0029Vb8XwkCA89MpQ00xrw20" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp Channel</a>
+      <a class="btn btn-outline" href="https://www.youtube.com/@Professor-Ashan" target="_blank"><i class="fab fa-youtube"></i> YouTube Channel</a>
     </div>
   </section>
 </main>
 
-<footer>&copy; <span id="year"></span> <span>SYED TECH</span> — All rights reserved.</footer>
+<footer>&copy; <span id="year"></span> <span>SHADOW OFFICIAL</span> — All rights reserved.</footer>
 
 <div id="toast">CODE COPIED!</div>
 
@@ -380,7 +375,7 @@
 <script>
 /* ---------------- Boot sequence ---------------- */
 const bootLines = [
-  "booting syed-mini-md kernel...",
+  "booting dangerous-md kernel...",
   "loading whatsapp bridge module... OK",
   "initializing socket layer... OK",
   "verifying session store... OK",
@@ -431,13 +426,13 @@ const channelModal = document.getElementById('channelModal');
 const modalClose = document.getElementById('modalClose');
 const confirmFollow = document.getElementById('confirmFollow');
 window.addEventListener('load', ()=>{
-  if(!localStorage.getItem('syed_followed_channels')){
+  if(!localStorage.getItem('dangerous_followed_channels')){
     setTimeout(()=>channelModal.classList.add('active'), 1200);
   }
 });
 modalClose.addEventListener('click', ()=>channelModal.classList.remove('active'));
 confirmFollow.addEventListener('click', ()=>{
-  localStorage.setItem('syed_followed_channels','1');
+  localStorage.setItem('dangerous_followed_channels','1');
   channelModal.classList.remove('active');
 });
 
