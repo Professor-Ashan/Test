@@ -37,16 +37,12 @@ const loadAdminIDs = async () => {
       await fs.mkdir(path.dirname(adminFilePath), { recursive: true });
       await fs.writeFile(adminFilePath, JSON.stringify(defaultAdmins, null, 2));
       adminIDs = defaultAdmins;
-      console.log(chalk.green('✅ Created admin.json with default owner ID'));
-    } catch (err) {
-      console.error(chalk.red('Error creating admin.json:'), err);
-    }
+    } catch (err) {}
   } else {
     try {
       const raw = await fs.readFile(adminFilePath, 'utf8');
       adminIDs = JSON.parse(raw);
     } catch (err) {
-      console.error(chalk.red('Error loading admin.json:'), err);
       adminIDs = defaultAdmins;
     }
   }
@@ -60,9 +56,7 @@ const runAutoLoad = async () => {
   isAutoLoadRunning = true;
   try {
     await autoLoadPairs();
-  } catch (e) {
-    console.error(chalk.red('❌ AUTO-LOAD FAILED:'), e);
-  } finally {
+  } catch (e) {} finally {
     isAutoLoadRunning = false;
   }
 };
@@ -76,24 +70,22 @@ const gracefulShutdown = (signal) => {
 
 // ========== STYLISH UI HELPERS ==========
 const getStylishStartMessage = (name) => {
-  return `
-⚡ *WELCOME TO DANGEROUS MD BOT* ⚡
-
-┏━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃  👤 *User:* ${name}
-┃  🤖 *Status:* Online & Secure
-┃  🛠️ *Version:* 2.0.0
-┗━━━━━━━━━━━━━━━━━━━━━━━━┛
-
-*AVAILABLE COMMANDS:*
-┌──────────────────────┐
-│ ⤷ /pair <number>
-│ ⤷ /unpair <number>
-│ ⤷ /help - View more
-└──────────────────────┘
-
-_Powered by SHADOW OFFICIAL_`;
+  return `⚡ *WELCOME TO DANGEROUS MD BOT* ⚡\n\n` +
+         `┏━━━━━━━━━━━━━━━━━━━━━━━━┓\n` +
+         `┃  👤 *User:* ${name}\n` +
+         `┃  🤖 *Status:* Online & Secure\n` +
+         `┃  🛠️ *Version:* 2.0.0\n` +
+         `┗━━━━━━━━━━━━━━━━━━━━━━━━┛\n\n` +
+         `*AVAILABLE COMMANDS:*\n` +
+         `┌──────────────────────┐\n` +
+         `│ ⤷ /pair <number>\n` +
+         `│ ⤷ /unpair <number>\n` +
+         `│ ⤷ /help - View more\n` +
+         `└──────────────────────┘\n\n` +
+         `_Powered by SHADOW OFFICIAL_`;
 };
+
+const PHOTO_URL = "https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png";
 
 // ========== START COMMAND ==========
 bot.onText(/\/start/, async (msg) => {
@@ -111,20 +103,16 @@ bot.onText(/\/start/, async (msg) => {
   }
 
   try {
-    await bot.sendPhoto(
-      chatId,
-      "https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png",
-      {
-        caption: getStylishStartMessage(firstName),
-        parse_mode: 'Markdown',
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: "👑 Owner", url: "https://t.me/DangerousSeller" }, { text: "📢 Channel", url: "https://whatsapp.com/channel/0029Vb8XwkCA89MpQ00xrw20" }],
-            [{ text: "🚀 Start Pairing", callback_data: "start_pairing" }]
-          ]
-        }
+    await bot.sendPhoto(chatId, PHOTO_URL, {
+      caption: getStylishStartMessage(firstName),
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: "👑 Owner", url: "https://t.me/DangerousSeller" }, { text: "📢 Channel", url: "https://whatsapp.com/channel/0029Vb8XwkCA89MpQ00xrw20" }],
+          [{ text: "🚀 Start Pairing", callback_data: "start_pairing" }]
+        ]
       }
-    );
+    });
   } catch (error) {
     bot.sendMessage(chatId, getStylishStartMessage(firstName), { parse_mode: 'Markdown' });
   }
@@ -185,7 +173,7 @@ bot.on('message', async (msg) => {
   }
 });
 
-bot.on('polling_error', (error) => console.error(chalk.red('Polling error:'), error.message));
+bot.on('polling_error', (error) => {});
 
 (async () => {
   await loadAdminIDs();
