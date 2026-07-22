@@ -37,16 +37,12 @@ const loadAdminIDs = async () => {
       await fs.mkdir(path.dirname(adminFilePath), { recursive: true });
       await fs.writeFile(adminFilePath, JSON.stringify(defaultAdmins, null, 2));
       adminIDs = defaultAdmins;
-      console.log(chalk.green('✅ Created admin.json with default owner ID'));
-    } catch (err) {
-      console.error(chalk.red('Error creating admin.json:'), err);
-    }
+    } catch (err) {}
   } else {
     try {
       const raw = await fs.readFile(adminFilePath, 'utf8');
       adminIDs = JSON.parse(raw);
     } catch (err) {
-      console.error(chalk.red('Error loading admin.json:'), err);
       adminIDs = defaultAdmins;
     }
   }
@@ -60,9 +56,7 @@ const runAutoLoad = async () => {
   isAutoLoadRunning = true;
   try {
     await autoLoadPairs();
-  } catch (e) {
-    console.error(chalk.red('❌ AUTO-LOAD FAILED:'), e);
-  } finally {
+  } catch (e) {} finally {
     isAutoLoadRunning = false;
   }
 };
@@ -76,24 +70,22 @@ const gracefulShutdown = (signal) => {
 
 // ========== STYLISH UI HELPERS ==========
 const getStylishStartMessage = (name) => {
-  return `
-⚡ *WELCOME TO DANGEROUS MD BOT* ⚡
-
-┏━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃  👤 *User:* ${name}
-┃  🤖 *Status:* Online & Secure
-┃  🛠️ *Version:* 2.0.0
-┗━━━━━━━━━━━━━━━━━━━━━━━━┛
-
-*AVAILABLE COMMANDS:*
-┌──────────────────────┐
-│ ⤷ /pair <number>
-│ ⤷ /unpair <number>
-│ ⤷ /help - View more
-└──────────────────────┘
-
-_Powered by SHADOW OFFICIAL_`;
+  return `⚡ *WELCOME TO DANGEROUS MD BOT* ⚡\n\n` +
+         `┏━━━━━━━━━━━━━━━━━━━━━━━━┓\n` +
+         `┃  👤 *USER:* *${name.toUpperCase()}*\n` +
+         `┃  🤖 *STATUS:* *ONLINE & SECURE*\n` +
+         `┃  🛠️ *VERSION:* *2.0.0*\n` +
+         `┗━━━━━━━━━━━━━━━━━━━━━━━━┛\n\n` +
+         `*AVAILABLE COMMANDS:*\n` +
+         `┌──────────────────────┐\n` +
+         `│ ⤷ */pair <number>*\n` +
+         `│ ⤷ */unpair <number>*\n` +
+         `│ ⤷ */help - View more*\n` +
+         `└──────────────────────┘\n\n` +
+         `_POWERED BY SHADOW OFFICIAL_`;
 };
+
+const PHOTO_URL = "https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png";
 
 // ========== START COMMAND ==========
 bot.onText(/\/start/, async (msg) => {
@@ -103,7 +95,8 @@ bot.onText(/\/start/, async (msg) => {
 
   if (isGroup) {
     const botInfo = await bot.getMe();
-    return bot.sendMessage(chatId, `╭━━〔 🛡️ 𝙑𝙄𝙋 𝙎𝙀𝘾𝙐𝙍𝙀 〕━━╮\n➤ Use in DM 👇\n╰━━〔 🚀 𝙎𝙏𝘼𝙍𝙏 𝙉𝙊𝙒 〕━━╯`, {
+    return bot.sendMessage(chatId, `╭━━〔 🛡️ *𝙑𝙄𝙋 𝙎𝙀𝘾𝙐𝙍𝙀* 〕━━╮\n➤ *Use in DM* 👇\n╰━━〔 🚀 *𝙎𝙏𝘼𝙍𝙏 𝙉𝙊𝙒* 〕━━╯`, {
+      parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [[{ text: '🚀 START IN DM', url: `https://t.me/${botInfo.username}?start=start` }]]
       }
@@ -111,20 +104,16 @@ bot.onText(/\/start/, async (msg) => {
   }
 
   try {
-    await bot.sendPhoto(
-      chatId,
-      "https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png",
-      {
-        caption: getStylishStartMessage(firstName),
-        parse_mode: 'Markdown',
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: "👑 Owner", url: "https://t.me/DangerousSeller" }, { text: "📢 Channel", url: "https://whatsapp.com/channel/0029Vb8XwkCA89MpQ00xrw20" }],
-            [{ text: "🚀 Start Pairing", callback_data: "start_pairing" }]
-          ]
-        }
+    await bot.sendPhoto(chatId, PHOTO_URL, {
+      caption: getStylishStartMessage(firstName),
+      parse_mode: 'Markdown',
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: "👑 Owner", url: "https://t.me/DangerousSeller" }, { text: "📢 Channel", url: "https://whatsapp.com/channel/0029Vb8XwkCA89MpQ00xrw20" }],
+          [{ text: "🚀 Start Pairing", callback_data: "start_pairing" }]
+        ]
       }
-    );
+    });
   } catch (error) {
     bot.sendMessage(chatId, getStylishStartMessage(firstName), { parse_mode: 'Markdown' });
   }
@@ -136,7 +125,7 @@ bot.on('callback_query', async (callbackQuery) => {
   const data = callbackQuery.data;
 
   if (data === "start_pairing") {
-    bot.sendMessage(chatId, "🔐 *Please send your WhatsApp number with country code.*\n\nExample: `923xxxxxxxxx`", { parse_mode: 'Markdown' });
+    bot.sendMessage(chatId, "🔐 *Please Send your WhatsApp Number*\n\n*Example:* `/pair 923xxxxxxxxx` \n*Or just type:* `923xxxxxxxxx`", { parse_mode: 'Markdown' });
     userStates.set(callbackQuery.from.id, { step: 'awaiting_number' });
   }
   bot.answerCallbackQuery(callbackQuery.id);
@@ -150,13 +139,13 @@ bot.onText(/\/pair(?:\s+(.+))?/, async (msg, match) => {
 
   if (!text) {
     userStates.set(userId, { step: 'awaiting_number' });
-    return bot.sendMessage(chatId, "🔐 *Send your WhatsApp number (e.g., 923xxxxxxxxx)*", { parse_mode: 'Markdown' });
+    return bot.sendMessage(chatId, "🔐 *Please Send your WhatsApp Number*\n\n*Example:* `/pair 923xxxxxxxxx` \n*Or just type:* `923xxxxxxxxx`", { parse_mode: 'Markdown' });
   }
 
-  if (!/^\d{7,15}$/.test(text)) return bot.sendMessage(chatId, "❌ *Invalid format.*");
+  if (!/^\d{7,15}$/.test(text)) return bot.sendMessage(chatId, "❌ *INVALID FORMAT.*");
 
   try {
-    await bot.sendMessage(chatId, "⏳ *Generating pairing code...*");
+    await bot.sendMessage(chatId, "⏳ *GENERATING PAIRING CODE...*");
     const startpairing = require('./pair.js');
     await startpairing(text + "@s.whatsapp.net");
     await sleep(5000);
@@ -165,9 +154,9 @@ bot.onText(/\/pair(?:\s+(.+))?/, async (msg, match) => {
     const cu = await fs.readFile(pairingFile, 'utf-8');
     const { code } = JSON.parse(cu);
     
-    bot.sendMessage(chatId, `✅ *Your Pairing Code:* \`${code}\`\n\n1. Open WhatsApp\n2. Linked Devices → Link a Device\n3. Enter this code`, { parse_mode: 'Markdown' });
+    bot.sendMessage(chatId, `✅ *YOUR PAIRING CODE:* \`${code}\`\n\n1. *Open WhatsApp*\n2. *Linked Devices → Link a Device*\n3. *Enter this code*`, { parse_mode: 'Markdown' });
   } catch (error) {
-    bot.sendMessage(chatId, "❌ *Pairing error.*");
+    bot.sendMessage(chatId, "❌ *PAIRING ERROR.*");
   }
 });
 
@@ -185,7 +174,7 @@ bot.on('message', async (msg) => {
   }
 });
 
-bot.on('polling_error', (error) => console.error(chalk.red('Polling error:'), error.message));
+bot.on('polling_error', (error) => {});
 
 (async () => {
   await loadAdminIDs();
