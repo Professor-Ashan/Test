@@ -1,7 +1,7 @@
 {
-  "name": "shadow-md",
+  "name": "Dangerous Md",
   "version": "2.0.0",
-  "description": "Powerful whatsapp bot created by shadow",
+  "description": "Powerful whatsapp bot created by Dangerous",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -17,7 +17,7 @@
     "multi-session",
     "pairing-bot"
   ],
-  "author": "shadow",
+  "author": "Dangerous",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
@@ -26,7 +26,7 @@
     "@adiwajshing/keyed-db": "^0.2.4",
     "@colors/colors": "^1.5.0",
     "@hapi/boom": "^10.0.0",
-    "@whiskeysockets/baileys": "latest",
+    "@whiskeysockets/baileys": "Code-x-120/Codex-Baileys",
     "@vitalets/google-translate-api": "^9.2.0",
     "@vreden/youtube_scraper": "^1.2.0",
     "@distube/ytdl-core": "^4.14.4",
@@ -102,9 +102,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://t.me/shadowhacr"
+    "url": "https://t.me/DangerousSeller"
   },
   "bugs": {
-    "url": "https://t.me/shadowhacr"
+    "url": "https://t.me/DangerousSeller"
   }
 }
