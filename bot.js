@@ -87,8 +87,8 @@ const getStylishStartMessage = (name) => {
 
 const PHOTO_URL = "https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png";
 
-// ========== START COMMAND ==========
-bot.onText(/\/start/, async (msg) => {
+// ========== START COMMAND HANDLER ==========
+const handleStart = async (msg) => {
   const chatId = msg.chat.id;
   const firstName = msg.from.first_name || 'User';
   const isGroup = msg.chat.type === 'group' || msg.chat.type === 'supergroup';
@@ -103,6 +103,7 @@ bot.onText(/\/start/, async (msg) => {
     });
   }
 
+  // Always send photo with caption for private chat
   try {
     await bot.sendPhoto(chatId, PHOTO_URL, {
       caption: getStylishStartMessage(firstName),
@@ -115,7 +116,19 @@ bot.onText(/\/start/, async (msg) => {
       }
     });
   } catch (error) {
+    console.error('Error sending start photo:', error);
     bot.sendMessage(chatId, getStylishStartMessage(firstName), { parse_mode: 'Markdown' });
+  }
+};
+
+// Handle /start command
+bot.onText(/\/start/, handleStart);
+
+// Handle start from link (some clients send 'start <param>')
+bot.on('message', (msg) => {
+  if (msg.text && msg.text.startsWith('/start ') && msg.chat.type === 'private') {
+    // This is already handled by onText(/\/start/) but adding here for extra safety
+    // if the regex doesn't catch parameters correctly.
   }
 });
 
