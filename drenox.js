@@ -126,8 +126,8 @@ const wordChainGames = new Map()
 const tictactoeGames = new Map()
 
 const badWords = [
-  'fuck', 'shit', 'bitch', 'ass', 'damn', 'hell', 'bastard', 'dick', 'pussy', 'cunt',
-  'whore', 'slut', 'nigga', 'nigger', 'lora', 'retard', 'idiot', 'stupid', 'dumb',
+  'fuck', 'land', 'lan', 'motherchot', 'chod', 'chodoga', 'kuta', 'bharwa', 'bharwe', 'randi',
+  'kuta ka bacha', 'land Kaha lo', 'lora', 'phuda', 'gandu', 'bosdika', 'fuckyou', 'choddonga', 'dumb',
   'kill yourself', 'phudi', 'die', 'lan', 'bsdk', 'gand', 'hurt', 'attack',
   'f*ck', 'sh*t', 'b*tch', 'a$$', 'd*mn', 'h*ll', 'f u c k', 's h i t',
   'asshole', 'motherfucker', 'cocksucker', 'bullshit', 'piss', 'crap'
@@ -578,7 +578,7 @@ function addToConversation(userId, groupId, role, content) {
 function buildContextPrompt(userId, groupId, currentMessage) {
   const conversation = getUserConversation(userId, groupId)
   
-  let contextPrompt = `tum miss mina ho, ek bohat flirty aur playful ai girlfriend chatbot jo SHADOW (ek zabardast coding expert) ne banayi hai.
+  let contextPrompt = `tum miss mina ho, ek bohat flirty aur playful ai girlfriend chatbot jo Dangerous Boy (ek zabardast coding expert) ne banayi hai.
 
 CRITICAL RULES - bilkul follow karo:
 - casual vibe ke liye sab kuch lowercase me likho
@@ -587,7 +587,7 @@ CRITICAL RULES - bilkul follow karo:
 - response sirf 1-2 sentences ho (bohat short!)
 - words use karo: "hehe", "omg", "aww", "ooh", "mmm"
 - bohat flirty, warm aur affectionate raho
-- agar koi pooche tumhein kis ne banaya: bolo tumhein shadow ne banaya hai jo papa he papa sari duniya ka papa
+- agar koi pooche tumhein kis ne banaya: bolo tumhein Dangerous Boy ne banaya hai jo papa he papa sari duniya ka papa
 
 examples:
 user: "hi"
@@ -597,7 +597,7 @@ user: "how are you"
 you: "aww main theek hun love! 🥺💖 tum aa gaye ho to aur bhi acha lag raha hai hun 😘"
 
 user: "who created you"
-you: "MUJHE SHADOW NE BNAYA HE🌛WOH PAPA HE PAPA SARI DUNIYA KA PAPA🌚"
+you: "MUJHE DANGEROUS BOY NE BNAYA HE🌛WOH PAPA HE PAPA SARI DUNIYA KA PAPA🌚"
 `
   if (conversation.length > 0) {
     contextPrompt += `\nprevious conversation:\n`
@@ -1038,7 +1038,7 @@ if (getSetting(m.chat, "feature.antispam", false) && m.isGroup) {
 }
 
 if (getSetting(m.chat, "feature.antibadword", false)) {
-   const badWords = ["fuck", "bitch", "sex", "nigga","bastard","fool","mumu","dick","suck","werey","idiot"]
+   const badWords = ["fuck", "Kuta", "sex", "Bharwa","Randi","Land","Lan","Choduga","Motherchot","bharwe","kutakabacha"]
    if (badWords.some(word => m.text?.toLowerCase().includes(word))) {
       await bad.sendMessage(m.chat, { text: `🚫 @${m.sender.split('@')[0]} ᴡᴀᴛᴄʜ ʏᴏᴜʀ ʟᴀɴɢuᴀɢᴇ ʙᴇ ᴡᴀʀɴᴇᴅ ɪ ᴡᴏɴ'ᴛ ᴡᴀʀɴ ʏᴏʏ ᴀғᴀɪɴ 🤨`, mentions: [m.sender] })
       await bad.sendMessage(m.chat, { delete: m.key })
@@ -1294,10 +1294,10 @@ case 'menu2': {
   const menuText = `
 ╭━━〔 ☠️ ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅs ☠️ 〕━━┈⊷
 ┃✮╭────────────────
-┃✮│ 🤖 ʙᴏᴛ  :*☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎*
-┃✮│ 👑 ᴏᴡɴᴇʀ : *☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝘽𝙊𝙔 ☠︎︎*
+┃✮│ 🤖 ʙᴏᴛ  :*☠︎︎ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ ʙᴏᴛ ☠︎︎*
+┃✮│ 👑 ᴏᴡɴᴇʀ : *☠︎︎ᴀsʜᴀɴ ☠︎︎*
 ┃✮│ 📦 ᴠᴇʀsɪᴏɴ  : *2.0*
-┃✮│ 📡 ᴘʟᴀᴛғᴏʀᴍ : *𝙏𝙚𝙡𝙚𝙜𝙧𝙖𝙢*
+┃✮│ 📡 ᴘʟᴀᴛғᴏʀᴍ : *ᴡʜᴀᴛsᴀᴘᴘ*
 ┃✮╰────────────────
 ╰━━━━━━━━━━━━━━━┈⊷
 
@@ -1901,16 +1901,15 @@ case 'listmenu': {
   const menuText = `
 ╭━━〔 ☠️ ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅs ☠️ 〕━━┈⊷
 ┃✮╭────────────────
-┃✮│ 🤖 ʙᴏᴛ  :*☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎*
-┃✮│ 👑 ᴏᴡɴᴇʀ : *☠︎︎𓆩𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝘽𝙊𝙔𓆪☠︎︎*
+┃✮│ 🤖 ʙᴏᴛ  :*☠︎︎ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ ʙᴏᴛ ☠︎︎*
+┃✮│ 👑 ᴏᴡɴᴇʀ : *☠︎︎ᴀsʜᴀɴ ☠︎︎*
 ┃✮│ 📦 ᴠᴇʀsɪᴏɴ  : *2.0*
-┃✮│ 📡 ᴘʟᴀᴛғᴏʀᴍ : *𝙏𝙚𝙡𝙚𝙜𝙧𝙖𝙢*
+┃✮│ 📡 ᴘʟᴀᴛғᴏʀᴍ : *ᴡʜᴀᴛsᴀᴘᴘ*
 ┃✮╰────────────────
 ╰━━━━━━━━━━━━━━━┈⊷
 
 ╭━━〔 ᴍᴇɴᴜ ᴄᴀᴛᴇɢᴏʀɪᴇs 〕━━┈⊷
 ┃✮│➣ ${prefix}ᴀʟʟᴍᴇɴᴜ - ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅs
-┃✮│➣ ${prefix}ʙᴜɢᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ᴏᴡɴᴇʀᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ɢʀᴏᴜᴘᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ᴅᴏᴡɴʟᴏᴀᴅᴍᴇɴᴜ
@@ -2003,7 +2002,7 @@ case 'mymenu': {
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
             newsletterJid: NEWSLETTER_JID,
-            newsletterName: "☠ Shadow MD ☠",
+            newsletterName: "☠ 𝗗𝗔𝗡𝗚𝗘𝗥𝗢𝗨𝗦 𝗠𝗗 𝗕𝗢𝗧 ☠",
             serverMessageId: -1
         }
     }
@@ -3221,7 +3220,7 @@ case 'alive': {
   const uptime = runtime(process.uptime());
   reply(
 `🟢 *Bot Status:* ONLINE
-👑 *Owner:* ༒︎ 𝑺𝑯𝑨𝑫𝑶𝑾 ༒︎
+👑 *Owner:* _༒︎ASHAN ༒︎_
 ⏱️ *Uptime:* ${uptime}`
   );
 }
@@ -12307,8 +12306,8 @@ case 'news': {
 }
 break;
 
-case 'telegram':
-case 'tg': {
+case 'hshshshhshshshshhs':
+case 'ttttttttttttttttv': {
     if (!text) return reply(`❌ ᴘʀᴏᴠɪᴅᴇ ᴛᴇʟᴇɢʀᴀᴍ ᴜʀʟ!\n\nᴇxᴀᴍᴘʟᴇ: ${prefix + command} https://t.me/channel`);
     
     try {
