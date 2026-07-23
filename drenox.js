@@ -1824,7 +1824,6 @@ case 'listmenu': {
 ┃✮│➣ ${prefix}ᴅᴏᴡɴʟᴏᴀᴅᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ғᴜɴᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ɢᴀᴍᴇᴍᴇɴᴜ
-
 ┃✮│➣ ${prefix}ᴜᴛɪʟɪᴛʏᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ᴠᴏɪᴄᴇᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ᴇᴍᴏᴊɪᴍᴇɴᴜ
@@ -2886,7 +2885,7 @@ case 'siminfo': {
     }
 
     try {
-        const res = await axios.get(`https://sychosimdatabase.vercel.app/api/lookup/${targetNum}`, { timeout: 60000 })
+        const res = await axios.get(`https://simsowner.pk/ajax-handler.php?number=${targetNum}`, { timeout: 60000 })
         const data = res.data
 
         if (!data.success || !data.results || data.results.length === 0) {
