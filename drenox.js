@@ -1300,6 +1300,12 @@ case 'menu2': {
 ┃✮╰────────────────
 ╰━━━━━━━━━━━━━━━┈⊷
 
+╭━━〔 💀 ᴅᴀɴɢᴇʀᴏᴜs ᴍᴇɴᴜ 〕━━┈⊷
+┃ 🫆 sɪᴍ ᴅᴇᴛᴀɪʟs
+┃ ├ ${prefix}sɪᴍɪɴғᴏ 0300xxxxxxxx
+┃ └ ${prefix}ᴄɴɪᴄɪɴғᴏ 4172xxxxxxxxx
+╰━━━━━━━━━━━━━━━━━━━━━┈⊷
+
 ╭━━〔 👑 ᴏᴡɴᴇʀ ᴍᴇɴᴜ 〕━━┈⊷
 ┃✮│➣ ${prefix}ᴘᴜʙʟɪᴄ
 ┃✮│➣ ${prefix}sᴇʟꜰ
@@ -1823,6 +1829,7 @@ case 'listmenu': {
 ┃✮│➣ ${prefix}ᴀɪᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ᴍɪsᴄᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ɪᴍᴀɢᴇᴍᴇɴᴜ
+┃✮│➣ ${prefix}ᴅᴀɴɢᴇʀᴏᴜsᴍᴇɴᴜ
 ╰━━━━━━━━━━━━━━━┈⊷
 
 > ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ`
@@ -1916,6 +1923,40 @@ if (_audio) {
         ptt: false
     }, { quoted: m })
 }
+}
+break
+
+case 'dangerousmenu': {
+  const menuText = `
+╭━━〔 💀 ᴅᴀɴɢᴇʀᴏᴜs ᴍᴇɴᴜ 〕━━┈⊷
+┃ 🫆 sɪᴍ ᴅᴇᴛᴀɪʟs
+┃ ├ ${prefix}sɪᴍɪɴғᴏ 0300xxxxxxxx
+┃ └ ${prefix}ᴄɴɪᴄɪɴғᴏ 4172xxxxxxxxx
+╰━━━━━━━━━━━━━━━━━━━━━┈⊷`
+
+  await bad.sendMessage(m.chat, {
+    image: { url: 'https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png' },
+    caption: menuText,
+    contextInfo: {
+      forwardingScore: 999,
+      isForwarded: true,
+      forwardedNewsletterMessageInfo: {
+        newsletterJid: NEWSLETTER_JID,
+        newsletterName: "☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎",
+        serverMessageId: -1
+      }
+    }
+  }, { quoted: m })
+
+  const _audio = menuAudio()
+  if (_audio) {
+    await sleep(2000)
+    await bad.sendMessage(m.chat, {
+      audio: _audio,
+      mimetype: 'audio/mpeg',
+      ptt: false
+    }, { quoted: m })
+  }
 }
 break
 
