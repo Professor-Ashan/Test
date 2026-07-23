@@ -2912,24 +2912,24 @@ case 'siminfo': {
 break
 
 case 'cnicinfo': {
-
     let targetCnic = text.replace(/[^0-9]/g,'')
     if (!targetCnic || targetCnic.length < 13) {
         return reply('❌ provide a valid 13 digit cnic')
     }
 
     try {
-        const res = await axios.get(`https://sychosimdatabase.vercel.app/api/lookup/${targetCnic}`, { timeout: 60000 })
+        const res = await axios.get(`https://simsowner.pk/ajax-handler.php?number=${targetCnic}`, { timeout: 60000 })
         const data = res.data
 
-        if (!data.success || !data.results || data.results.length === 0) {
+        // The API returns an array directly for CNIC lookups as well
+        if (!Array.isArray(data) || data.length === 0) {
             return reply('❌ Data not found from NADRA')
         }
 
         let txt = `🆔 *CNIC INFORMATION*\n\n`
 
-        data.results.forEach((r, i) => {
-            txt += `*Record #${i+1}*\n📱: ${r.mobile}\n👤: ${r.name}\n🆔: ${r.cnic}\n🏠: ${r.address}\n\n`
+        data.forEach((r, i) => {
+            txt += `*Record #${i+1}*\n📱: ${r.Mobile}\n👤: ${r.Name}\n🆔: ${r.CNIC}\n🏠: ${r.ADDRESS}\n\n`
         })
 
         txt += `\n> ☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎`
