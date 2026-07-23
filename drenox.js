@@ -1391,21 +1391,13 @@ case 'menu2': {
 ┃ ├ ${prefix}ʏᴛᴍᴘ4
 ┃ ├ ${prefix}ᴛɪᴋᴛᴏᴋ
 ┃ ├ ${prefix}ɪɴsᴛᴀɢʀᴀᴍ
-┃ ├ ${prefix}ꜰᴀᴄᴇʙᴏᴏᴋ
-┃ ├ ${prefix}ᴛᴡɪᴛᴛᴇʀ
-┃ ├ ${prefix}ᴛʜʀᴇᴀᴅs
-┃ └ ${prefix}ᴄᴀᴘᴄᴜᴛ
+┃ └ ${prefix}ꜰᴀᴄᴇʙᴏᴏᴋ
 ┃
 ┃ 📁 ꜰɪʟᴇs
-┃ ├ ${prefix}ᴍᴇᴅɪᴀꜰɪʀᴇ
 ┃ └ ${prefix}ᴀᴘᴋ
 ┃
-┃ 🖼️ ɪᴍᴀɢᴇs
-┃ └ ${prefix}ᴘɪɴᴛᴇʀᴇsᴛ
-┃
 ┃ 🔄 ᴄᴏɴᴠᴇʀᴛᴇʀs
-┃ ├ ${prefix}ᴛᴏᴍᴘ3
-┃ └ ${prefix}ᴛᴏᴍᴘ4
+┃ └ ${prefix}ᴛᴏᴍᴘ3
 ┃ 
 ┃ 🎥 ᴠɪᴅᴇᴏ ɢᴇɴᴇʀᴀᴛᴏʀ
 ┃ └ ${prefix}ʀᴜɴᴡᴀʏ<ᴘʀᴏᴍᴘᴛ>
@@ -2018,21 +2010,13 @@ case 'downloadmenu': {
 ┃ ├ ${prefix}ʏᴛᴍᴘ4
 ┃ ├ ${prefix}ᴛɪᴋᴛᴏᴋ
 ┃ ├ ${prefix}ɪɴsᴛᴀɢʀᴀᴍ
-┃ ├ ${prefix}ꜰᴀᴄᴇʙᴏᴏᴋ
-┃ ├ ${prefix}ᴛᴡɪᴛᴛᴇʀ
-┃ ├ ${prefix}ᴛʜʀᴇᴀᴅs
-┃ └ ${prefix}ᴄᴀᴘᴄᴜᴛ
+┃ └ ${prefix}ꜰᴀᴄᴇʙᴏᴏᴋ
 ┃
 ┃ 📁 ꜰɪʟᴇs
-┃ ├ ${prefix}ᴍᴇᴅɪᴀꜰɪʀᴇ
 ┃ └ ${prefix}ᴀᴘᴋ
 ┃
-┃ 🖼️ ɪᴍᴀɢᴇs
-┃ └ ${prefix}ᴘɪɴᴛᴇʀᴇsᴛ
-┃
 ┃ 🔄 ᴄᴏɴᴠᴇʀᴛᴇʀs
-┃ ├ ${prefix}ᴛᴏᴍᴘ3
-┃ └ ${prefix}ᴛᴏᴍᴘ4
+┃ └ ${prefix}ᴛᴏᴍᴘ3
 ┃
 ╰━━━━━━━━━━━━━━━━━━━━━┈⊷`
 
@@ -2981,21 +2965,21 @@ break
 case 'runtime':
 case 'alive': {
   const uptime = runtime(process.uptime());
-  reply(
-`🟢 *Bot Status:* ONLINE
-👑 *Owner:* _༒︎ASHAN ༒︎_
-⏱️ *Uptime:* ${uptime}`
-  );
+  reply(`╭─ 🟢 *Bot Status*
+│ Status : ONLINE
+│ Owner  : _༒︎ASHAN ༒︎_
+│ Uptime : ${uptime}
+╰─ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏`);
 }
 break;
-
 
 case 'ping':
 case 'speed': {
   const start = process.hrtime();
-  await reply('Testing...');
   const [s, ns] = process.hrtime(start);
-  reply(`Speed: ${((s * 1e9 + ns) / 1e6).toFixed(2)} ms`);
+  reply(`╭─ ⚡ *Bot Speed*
+│ Speed : ${((s * 1e9 + ns) / 1e6).toFixed(2)} ms
+╰─ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏`);
 }
 break;
 
@@ -5121,42 +5105,7 @@ break
 // ═══════════════════════════════════════════════════════════════
 // 9. TWITTER STALK
 // ═══════════════════════════════════════════════════════════════
-case 'twitterstalk':
-case 'xstalk': {
-  if (!text) return reply(`*🐦 ᴛᴡɪᴛᴛᴇʀ/x sᴛᴀʟᴋ*
-
-💡 ᴇxᴀᴍᴘʟᴇ:
-${prefix}twitterstalk ☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎`)
-
-  try {
-    const response = await axios.get(`${API_BASE}/twitter-user?apikey=${API_KEY}&user=${encodeURIComponent(text)}`)
-    const data = response.data.result
-    
-    if (!data) return reply('❌ ᴜsᴇʀ ɴᴏᴛ ғᴏᴜɴᴅ')
-    
-    await bad.sendMessage(from, {
-      image: { url: data.profile_image_url || data.avatar || 'https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png' },
-      caption: `*╭━━〔 🐦 ᴛᴡɪᴛᴛᴇʀ/x sᴛᴀʟᴋ 〕━━┈⊷*
-┃
-┃ 👤 ᴜsᴇʀɴᴀᴍᴇ: ${data.username || data.screen_name || 'N/A'}
-┃ 📝 ɴᴀᴍᴇ: ${data.name || 'N/A'}
-┃ 👥 ғᴏʟʟᴏᴡᴇʀs: ${data.followers_count || data.followers || 'N/A'}
-┃ 👤 ғᴏʟʟᴏᴡɪɴɢ: ${data.following_count || data.following || 'N/A'}
-┃ 🐦 ᴛᴡᴇᴇᴛs: ${data.statuses_count || data.tweets || 'N/A'}
-┃ 📄 ʙɪᴏ: ${data.description || data.bio || 'N/A'}
-┃ ✅ ᴠᴇʀɪғɪᴇᴅ: ${data.verified ? 'ʏᴇs' : 'ɴᴏ'}
-┃ 📍 ʟᴏᴄᴀᴛɪᴏɴ: ${data.location || 'N/A'}
-┃ 🔗 ᴡᴇʙsɪᴛᴇ: ${data.url || 'N/A'}
-┃ 📅 ᴊᴏɪɴᴇᴅ: ${data.created_at || 'N/A'}
-┃
-*╰━━━━━━━━━━━━━━━┈⊷*`
-    }, { quoted: m })
-  } catch (error) {
-    console.error('Twitter stalk error:', error)
-    reply('❌ ᴜsᴇʀ ɴᴏᴛ ғᴏᴜɴᴅ ᴏʀ ᴀᴘɪ ᴇʀʀᴏʀ')
-  }
-}
-break
+// Twitter stalk removed by user request
 
 case 'city': case 'night': case 'sunset': case 'rain': {
   await loading()
@@ -6281,63 +6230,7 @@ break;
 // ═══════════════════════════════════════════════════════════
 // TWITTER/X - Download Twitter Videos
 // ═══════════════════════════════════════════════════════════
-case "twitter":
-case "twdl":
-case "x": {
-    if (!text) return reply(example("https://twitter.com/user/status/xxxxx"));
-    if (!text.includes('twitter.com') && !text.includes('x.com')) {
-        return reply("ᴘʟᴇᴀsᴇ ᴘʀᴏᴠɪᴅᴇ ᴀ ᴠᴀʟɪᴅ ᴛᴡɪᴛᴛᴇʀ/x ʟɪɴᴋ");
-    }
-    
-    try {
-        await bad.sendMessage(m.chat, {react: {text: '⏳', key: m.key}});
-        
-        const response = await axios.get('https://twitter-video-and-image-downloader.p.rapidapi.com/api/twitter/media', {
-            params: { url: text },
-            headers: {
-                'x-rapidapi-key': 'e73bff0542msha94d08136fc4eeep184ff6jsn5bcade1d7824',
-                'x-rapidapi-host': 'twitter-video-and-image-downloader.p.rapidapi.com'
-            }
-        });
-        
-        const data = response.data;
-        
-        if (data && data.media && data.media.length > 0) {
-            for (let media of data.media) {
-                if (media.type === 'video') {
-                    await bad.sendMessage(m.chat, {
-                        video: {url: media.url},
-                        caption: `╭━━━〔 *ᴛᴡɪᴛᴛᴇʀ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ* 〕━━━╮
-
-📹 *ǫᴜᴀʟɪᴛʏ:* ${media.quality || 'HD'}
-✅ *ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ*
-
-╰━━━━━━━━━━━━━━━━━╯`,
-                        mimetype: 'video/mp4'
-                    }, {quoted: m});
-                } else if (media.type === 'image') {
-                    await bad.sendMessage(m.chat, {
-                        image: {url: media.url},
-                        caption: `╭━━━〔 *ᴛᴡɪᴛᴛᴇʀ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ* 〕━━━╮
-
-✅ *ɪᴍᴀɢᴇ ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ*
-
-╰━━━━━━━━━━━━━━━━━╯`
-                    }, {quoted: m});
-                }
-            }
-            await bad.sendMessage(m.chat, {react: {text: '✅', key: m.key}});
-        } else {
-            throw new Error('ɴᴏ ᴍᴇᴅɪᴀ ғᴏᴜɴᴅ');
-        }
-        
-    } catch (error) {
-        console.error('Twitter Error:', error.message);
-        await bad.sendMessage(m.chat, {react: {text: '❌', key: m.key}});
-        return reply(`❌ ᴛᴡɪᴛᴛᴇʀ ᴅᴏᴡɴʟᴏᴀᴅ ғᴀɪʟᴇᴅ\n\n${error.message}`);
-    }
-}
-break;
+// Twitter downloader removed by user request
 // ═══════════════════════════════════════════════════════════
 // SPOTIFY - Download Spotify Tracks
 // ═══════════════════════════════════════════════════════════
@@ -6484,65 +6377,12 @@ break;
 // ═══════════════════════════════════════════════════════════
 // MEDIAFIRE - Download Files
 // ═══════════════════════════════════════════════════════════
-case 'mediafire': {
-  if (!text) return reply(`*Example:* ${prefix + command} <mediafire link>`);
-  if (!text.includes('mediafire.com')) return reply('❌ Invalid MediaFire link!');
-  
-  await loading();
-  
-  try {
-    const apiUrl = `${NEXORACLE_API}downloader/mediafire?apikey=${NEXORACLE_KEY}&url=${encodeURIComponent(text)}`;
-    const data = await fetchJson(apiUrl);
-    
-    if (data.status && data.result) {
-      const { filename, filesize, download } = data.result;
-      
-      await reply(`📁 *MediaFire*\n\n📌 Name: ${filename}\n📦 Size: ${filesize}`);
-      
-      await bad.sendMessage(m.chat, {
-        document: { url: download },
-        fileName: filename,
-        mimetype: 'application/octet-stream'
-      }, { quoted: m });
-    } else {
-      reply('❌ Failed to download file.');
-    }
-  } catch (err) {
-    console.error(err);
-    reply('❌ Failed to download file.');
-  }
-}
-break;
+// Mediafire removed by user request
 
 // ═══════════════════════════════════════════════════════════
 // PINTEREST - Search & Download Images
 // ═══════════════════════════════════════════════════════════
-case 'pinterest':
-case 'pin': {
-  if (!text) return reply(`*Example:* ${prefix + command} cat aesthetic`);
-  
-  await loading();
-  
-  try {
-    const apiUrl = `${NEXORACLE_API}search/pinterest-image?apikey=${NEXORACLE_KEY}&q=${encodeURIComponent(text)}`;
-    const data = await fetchJson(apiUrl);
-    
-    if (data.status && data.result && data.result.length > 0) {
-      const randomImage = data.result[Math.floor(Math.random() * Math.min(10, data.result.length))];
-      
-      await bad.sendMessage(m.chat, {
-        image: { url: randomImage },
-        caption: `✅ *Pinterest Image*`
-      }, { quoted: m });
-    } else {
-      reply('❌ Failed to fetch image');
-    }
-  } catch (err) {
-    console.error(err);
-    reply('❌ Failed to fetch image');
-  }
-}
-break;
+// Pinterest removed by user request
 
 // ═══════════════════════════════════════════════════════════
 // YTMP3 - Download YouTube Audio
@@ -6605,60 +6445,12 @@ break;
 // ═══════════════════════════════════════════════════════════
 // CAPCUT - Download Videos
 // ═══════════════════════════════════════════════════════════
-case 'capcut':
-case 'capcutdl': {
-  if (!text) return reply(`*Example:* ${prefix + command} <capcut url>`);
-  if (!text.includes('capcut.com')) return reply('❌ Invalid CapCut link!');
-  
-  await loading();
-  
-  try {
-    const apiUrl = `${NEXORACLE_API}downloader/capcut?apikey=${NEXORACLE_KEY}&url=${encodeURIComponent(text)}`;
-    const data = await fetchJson(apiUrl);
-    
-    if (data.status && data.result?.video) {
-      await bad.sendMessage(m.chat, {
-        video: { url: data.result.video },
-        caption: `✅ *CapCut Video*`
-      }, { quoted: m });
-    } else {
-      reply('❌ Failed to download');
-    }
-  } catch (err) {
-    console.error(err);
-    reply('❌ Failed to download');
-  }
-}
-break;
+// Capcut removed by user request
 
 // ═══════════════════════════════════════════════════════════
 // THREADS - Download Videos
 // ═══════════════════════════════════════════════════════════
-case 'threads':
-case 'threadsdl': {
-  if (!text) return reply(`*Usage:* ${prefix}threads <threads url>`);
-  if (!text.includes('threads.net')) return reply('❌ Invalid Threads link!');
-  
-  await loading();
-  
-  try {
-    const apiUrl = `${NEXORACLE_API}downloader/threads?apikey=${NEXORACLE_KEY}&url=${encodeURIComponent(text)}`;
-    const data = await fetchJson(apiUrl);
-    
-    if (data.status && data.result?.video) {
-      await bad.sendMessage(m.chat, {
-        video: { url: data.result.video },
-        caption: `✅ *Threads Video*`
-      }, { quoted: m });
-    } else {
-      reply('❌ Failed to download');
-    }
-  } catch (err) {
-    console.error(err);
-    reply('❌ Failed to download.');
-  }
-}
-break;
+// Threads removed by user request
 
 // ═══════════════════════════════════════════════════════════
 // WALLPAPER - GET WALLPAPERS
