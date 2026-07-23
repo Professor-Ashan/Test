@@ -3872,7 +3872,7 @@ case 'close': {
     if (!isAdmins && !isCreator) return reply("╭━━〔 ᴀᴄᴄᴇss ᴅᴇɴɪᴇᴅ 〕━━┈⊷\n┃◈ ᴀᴅᴍɪɴs ᴏɴʟʏ ᴄᴏᴍᴍᴀɴᴅ\n╰━━━━━━━━━━━━━━━┈⊷")
 
     await bad.groupSettingUpdate(m.chat, 'announcement')
-    reply("✅ *ɢʀᴏᴜᴘ ᴄʟᴏsᴇᴅ!*\n\n🔒 ᴏɴʟʏ ᴀᴅᴍɪɴs ᴄᴀɴ sᴇɴᴅ ᴍᴇssᴀɢᴇs ɴᴏᴡ.")
+    reply("╭─ 🔒 *Group Closed*\n│ Dangerous Md Bot\n│ Only admins can send messages now.\n╰─ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏")
 }
 break
 
@@ -3883,7 +3883,7 @@ case 'open': {
 
     
     await bad.groupSettingUpdate(m.chat, 'not_announcement')
-    reply("✅ *ɢʀᴏᴜᴘ ᴏᴘᴇɴᴇᴅ!*\n\n🔊 ᴀʟʟ ᴍᴇᴍʙᴇʀs ᴄᴀɴ sᴇɴᴅ ᴍᴇssᴀɢᴇs ɴᴏᴡ.")
+    reply("╭─ 🔊 *Group Opened*\n│ Dangerous Md Bot\n│ All members can send messages now.\n╰─ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏")
 }
 break
 
@@ -5570,19 +5570,19 @@ case "antilink": {
     if (action === "on") {
         if (mode === "warn") {
             setSetting(m.chat, "antilink", "warn");
-            m.reply("🛡️ ᴀɴᴛɪʟɪɴᴋ ᴇɴᴀʙʟᴇᴅ ɪɴ *ᴡᴀʀɴ ᴍᴏᴅᴇ*\n\n⚠️ ᴜsᴇʀs ᴡɪʟʟ ʙᴇ ᴋɪᴄᴋᴇᴅ ᴀғᴛᴇʀ 3 ᴡᴀʀɴɪɴɢs");
+            m.reply("╭─ ✅ *Anti-Link*\n│ Mode : WARN\n│ Users will be kicked after 3 warnings\n╰─ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏");
         } else if (mode === "kick") {
             setSetting(m.chat, "antilink", "kick");
-            m.reply("🛡️ ᴀɴᴛɪʟɪɴᴋ ᴇɴᴀʙʟᴇᴅ ɪɴ *ᴋɪᴄᴋ ᴍᴏᴅᴇ*\n\n⚠️ ᴜsᴇʀs ᴡɪʟʟ ʙᴇ ɪɴsᴛᴀɴᴛʟʏ ᴋɪᴄᴋᴇᴅ");
+            m.reply("╭─ ✅ *Anti-Link*\n│ Mode : KICK\n│ Users will be instantly kicked\n╰─ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏");
         } else if (mode === "delete") {
             setSetting(m.chat, "antilink", "delete");
-            m.reply("🛡️ ᴀɴᴛɪʟɪɴᴋ ᴇɴᴀʙʟᴇᴅ ɪɴ *ᴅᴇʟᴇᴛᴇ ᴍᴏᴅᴇ*\n\n⚠️ ʟɪɴᴋs ᴡɪʟʟ ʙᴇ ᴅᴇʟᴇᴛᴇᴅ ᴏɴʟʏ");
+            m.reply("╭─ ✅ *Anti-Link*\n│ Mode : DELETE\n│ Links will be deleted automatically\n╰─ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏");
         } else {
             m.reply("ɪɴᴠᴀʟɪᴅ ᴍᴏᴅᴇ. ᴜsᴇ: ᴡᴀʀɴ, ᴋɪᴄᴋ, ᴏʀ ᴅᴇʟᴇᴛᴇ");
         }
     } else if (action === "off") {
         setSetting(m.chat, "antilink", false);
-        m.reply("🚫 ᴀɴᴛɪʟɪɴᴋ ᴅɪsᴀʙʟᴇᴅ ғᴏʀ ᴛʜɪs ɢʀᴏᴜᴘ");
+        m.reply("╭─ 🚫 *Anti-Link*\n│ Status : DISABLED\n╰─ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏");
     } else {
         m.reply("ɪɴᴠᴀʟɪᴅ ᴀᴄᴛɪᴏɴ. ᴜsᴇ: ᴏɴ ᴏʀ ᴏғғ");
     }
