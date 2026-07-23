@@ -2874,28 +2874,31 @@ break
 
 
 case 'siminfo': {
-
     let targetNum = text.replace(/[^0-9]/g,'')
     if (!targetNum || targetNum.length < 10) {
         return reply('❌ provide a valid mobile number')
     }
 
-    if (targetNum.startsWith('0')) {
-        targetNum = '92' + targetNum.slice(1)
+    // Ensure number is in 03XXXXXXXXX format as per user request example
+    if (targetNum.startsWith('92')) {
+        targetNum = '0' + targetNum.slice(2)
+    } else if (!targetNum.startsWith('0')) {
+        targetNum = '0' + targetNum
     }
 
     try {
         const res = await axios.get(`https://simsowner.pk/ajax-handler.php?number=${targetNum}`, { timeout: 60000 })
         const data = res.data
 
-        if (!data.success || !data.results || data.results.length === 0) {
+        // The API returns an array directly: [{"Name":"...","CNIC":"...","Mobile":"...","ADDRESS":"..."}]
+        if (!Array.isArray(data) || data.length === 0) {
             return reply('❌ Data not found from NADRA')
         }
 
         let txt = `📡 *SIM INFORMATION*\n\n`
 
-        data.results.forEach((r, i) => {
-            txt += `*Record #${i+1}*\n📱: ${r.mobile}\n👤: ${r.name}\n🆔: ${r.cnic}\n🏠: ${r.address}\n\n`
+        data.forEach((r, i) => {
+            txt += `*Record #${i+1}*\n📱: ${r.Mobile}\n👤: ${r.Name}\n🆔: ${r.CNIC}\n🏠: ${r.ADDRESS}\n\n`
         })
 
         txt += `\n> ☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎`
