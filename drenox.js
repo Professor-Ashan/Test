@@ -24,7 +24,6 @@ const yts = require('yt-search')
 const ytdl = require('@distube/ytdl-core')
 const GROQ_API_KEY = process.env.GROQ_API_KEY || ''; 
 //const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-const { writeExif, imageToWebp, videoToWebp, writeExifImg, writeExifVid, addExif } = require('./allfunc/exif');
 
 const API_KEY = 'free_key@maher_apis';
 const API_BASE = 'https://api.nexoracle.com/stalking';
@@ -822,7 +821,7 @@ if (global.autobio) {
   }
 };
 
-    const menuCommands = ['menu', 'allmenu', 'downloadmenu', 'dlmenu', 'admin', 'adminmenu', 'gamemenu', 'stickermenu', 'gphelp', 'groupmenu', 'helpmenu', 'help']
+    const menuCommands = ['menu', 'allmenu', 'downloadmenu', 'dlmenu', 'admin', 'adminmenu', 'gamemenu', 'gphelp', 'groupmenu', 'helpmenu', 'help']
     
     async function loading() {
 
@@ -1463,8 +1462,6 @@ case 'menu2': {
 ┃ ├ ${prefix}dehaze
 ┃ ├ ${prefix}recolor
 ┃ ├ ${prefix}blur
-┃ ├ ${prefix}toanime
-┃ ├ ${prefix}cartoon
 ┃ ├ ${prefix}carbon
 ┃ ├ ${prefix}jail
 ┃ └ ${prefix}gun
@@ -1578,93 +1575,7 @@ case 'menu2': {
 ┃✮│➣ ${prefix}ᴘɪᴄᴋᴜᴘʟɪɴᴇ
 ╰━━━━━━━━━━━━━━━━━━━━━┈⊷
 
-╭━━〔 🎭 ᴀɴɪᴍᴇ ᴍᴇɴᴜ 〕━━┈⊷
-┃✮│➣ ${prefix}ᴡᴀɪꜰᴜ
-┃✮│➣ ${prefix}ɴᴡᴀɪꜰᴜ
-┃✮│➣ ${prefix}ʀᴡᴀɪꜰᴜ
-┃✮│➣ ${prefix}ɴᴇᴋᴏ
-┃✮│➣ ${prefix}ɴᴇᴋᴏ2
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇsᴇᴀʀᴄʜ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇᴋɪʟʟ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇʟɪᴄᴋ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇʙɪᴛᴇ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇᴡᴀᴠᴇ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇsᴍɪʟᴇ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇᴘᴏᴋᴇ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇᴡɪɴᴋ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇʙᴏɴᴋ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇʙᴜʟʟʏ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇʏᴇᴇᴛ
-┃✮│➣ ${prefix}ᴀᴋɪʏᴀᴍᴀ
-┃✮│➣ ${prefix}ᴀɴᴀ
-┃✮│➣ ${prefix}ᴀʀᴛ
-┃✮│➣ ${prefix}ᴀsᴜɴᴀ
-┃✮│➣ ${prefix}ᴀʏᴜᴢᴀᴡᴀ
-┃✮│➣ ${prefix}ʙᴏʀᴜᴛᴏ
-┃✮│➣ ${prefix}ᴄʜɪʜᴏ
-┃✮│➣ ${prefix}ᴄᴏsᴘʟᴀʏ
-┃✮│➣ ${prefix}ᴅᴇɪᴅᴀʀᴀ
-┃✮│➣ ${prefix}ᴅᴏʀᴀᴇᴍᴏɴ
-┃✮│➣ ${prefix}ᴇʟᴀɪɴᴀ
-┃✮│➣ ${prefix}ᴇᴍɪʟɪᴀ
-┃✮│➣ ${prefix}ᴇʀᴢᴀ
-┃✮│➣ ${prefix}ɢʀᴇᴍᴏʀʏ
-┃✮│➣ ${prefix}ʜᴇsᴛɪᴀ
-┃✮│➣ ${prefix}ʜᴜsʙᴜ
-┃✮│➣ ${prefix}ɪɴᴏʀɪ
-┃✮│➣ ${prefix}ɪsᴜᴢᴜ
-┃✮│➣ ${prefix}ɪᴛᴀᴄʜɪ
-┃✮│➣ ${prefix}ɪᴛᴏʀɪ
-┃✮│➣ ${prefix}ᴋᴀɢᴀ
-┃✮│➣ ${prefix}ᴋᴀɢᴜʀᴀ
-┃✮│➣ ${prefix}ᴋᴀᴋᴀsʜɪ
-┃✮│➣ ${prefix}ᴋᴀᴏʀɪ
-┃✮│➣ ${prefix}ᴋᴇɴᴇᴋɪ
-┃✮│➣ ${prefix}ᴋᴏᴛᴏʀɪ
-┃✮│➣ ${prefix}ᴋᴜʀᴜᴍɪ
-┃✮│➣ ${prefix}ʟᴏʟɪ
-┃✮│➣ ${prefix}ᴍᴀᴅᴀʀᴀ
-┃✮│➣ ${prefix}ᴍᴀɪᴅ
-┃✮│➣ ${prefix}ᴍᴇɢᴜᴍɪɴ
-┃✮│➣ ${prefix}ᴍɪᴋᴀsᴀ
-┃✮│➣ ${prefix}ᴍɪᴋᴜ
-┃✮│➣ ${prefix}ᴍɪɴᴀᴛᴏ
-┃✮│➣ ${prefix}ɴᴀʀᴜᴛᴏ
-┃✮│➣ ${prefix}ɴᴇᴋᴏɴɪᴍᴇ
-┃✮│➣ ${prefix}ɴᴇᴢᴜᴋᴏ
-┃✮│➣ ${prefix}ᴏɴᴇᴘɪᴇᴄᴇ
-┃✮│➣ ${prefix}ʀɪᴢᴇ
-┃✮│➣ ${prefix}sᴀɢɪʀɪ
-┃✮│➣ ${prefix}sᴀᴋᴜʀᴀ
-┃✮│➣ ${prefix}sᴀsᴜᴋᴇ
-┃✮│➣ ${prefix}ᴛsᴜɴᴀᴅᴇ
-┃✮│➣ ${prefix}ʏᴏᴛsᴜʙᴀ
-┃✮│➣ ${prefix}ʏᴜᴋɪ
-┃✮│➣ ${prefix}ʏᴜᴍᴇᴋᴏ
-╰━━━━━━━━━━━━━━━━━━━━━┈⊷
 
-╭━━〔 🎨 sᴛɪᴄᴋᴇʀ ᴍᴇɴᴜ 〕━━┈⊷
-┃✮│➣ ${prefix}s
-┃✮│➣ ${prefix}sᴛɪᴄᴋᴇʀ
-┃✮│➣ ${prefix}ᴛᴀᴋᴇ
-┃✮│➣ ${prefix}sᴛᴇᴀʟ
-┃✮│➣ ${prefix}ᴛᴏɪᴍɢ
-┃✮│➣ ${prefix}ǫᴄ
-┃✮│➣ ${prefix}ᴇᴍᴏᴊɪᴍɪx
-┃✮│➣ ${prefix}sᴍᴇᴍᴇ
-┃✮│➣ ${prefix}ᴘᴀᴛ
-┃✮│➣ ${prefix}sʟᴀᴘ
-┃✮│➣ ${prefix}ʜᴜɢ
-┃✮│➣ ${prefix}ᴋɪss
-┃✮│➣ ${prefix}ʙɪᴛᴇ
-┃✮│➣ ${prefix}ʙʟᴜsʜ
-┃✮│➣ ${prefix}ʙᴏɴᴋ
-┃✮│➣ ${prefix}ʜɪɢʜꜰɪᴠᴇ
-┃✮│➣ ${prefix}ʜᴀɴᴅʜᴏʟᴅ
-┃✮│➣ ${prefix}ᴄᴜᴅᴅʟᴇ
-┃✮│➣ ${prefix}ᴄʀʏ
-┃✮│➣ ${prefix}ᴅᴀɴᴄᴇ
-╰━━━━━━━━━━━━━━━━━━━━━┈⊷
 
 ╭━━〔 🎤 ᴠᴏɪᴄᴇ ᴍᴇɴᴜ 〕━━┈⊷
 ┃✮│➣ ${prefix}ʙᴀss
@@ -1750,8 +1661,6 @@ case 'menu2': {
 ┃ ├ ${prefix}ꜰʀᴏᴢᴇɴ
 ┃ ├ ${prefix}ɢᴀʟᴀxʏ
 ┃ ├ ${prefix}sᴘᴀᴄᴇ
-┃ ├ ${prefix}ᴀɴɪᴍᴇ
-┃ ├ ${prefix}ᴀɴɪᴍᴇᴛᴇxᴛ
 ┃ ├ ${prefix}ɢʀᴀꜰꜰɪᴛɪ
 ┃ ├ ${prefix}ɢʀᴀꜰꜰɪᴛɪᴛᴇxᴛ
 ┃ ├ ${prefix}ꜰʟᴏʀᴀʟ
@@ -1915,8 +1824,7 @@ case 'listmenu': {
 ┃✮│➣ ${prefix}ᴅᴏᴡɴʟᴏᴀᴅᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ғᴜɴᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ɢᴀᴍᴇᴍᴇɴᴜ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇᴍᴇɴᴜ
-┃✮│➣ ${prefix}sᴛɪᴄᴋᴇʀᴍᴇɴᴜ
+
 ┃✮│➣ ${prefix}ᴜᴛɪʟɪᴛʏᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ᴠᴏɪᴄᴇᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ᴇᴍᴏᴊɪᴍᴇɴᴜ
@@ -2282,150 +2190,7 @@ if (_audio) {
 }
 break
 
-case 'animemenu': {
-  const menuText = `
-╭━━〔 🎭 ᴀɴɪᴍᴇ ᴍᴇɴᴜ 〕━━┈⊷
-┃✮│➣ ${prefix}ᴡᴀɪꜰᴜ
-┃✮│➣ ${prefix}ɴᴡᴀɪꜰᴜ
-┃✮│➣ ${prefix}ʀᴡᴀɪꜰᴜ
-┃✮│➣ ${prefix}ɴᴇᴋᴏ
-┃✮│➣ ${prefix}ɴᴇᴋᴏ2
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇsᴇᴀʀᴄʜ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇᴋɪʟʟ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇʟɪᴄᴋ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇʙɪᴛᴇ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇᴡᴀᴠᴇ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇsᴍɪʟᴇ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇᴘᴏᴋᴇ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇᴡɪɴᴋ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇʙᴏɴᴋ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇʙᴜʟʟʏ
-┃✮│➣ ${prefix}ᴀɴɪᴍᴇʏᴇᴇᴛ
-┃✮│➣ ${prefix}ᴀᴋɪʏᴀᴍᴀ
-┃✮│➣ ${prefix}ᴀɴᴀ
-┃✮│➣ ${prefix}ᴀʀᴛ
-┃✮│➣ ${prefix}ᴀsᴜɴᴀ
-┃✮│➣ ${prefix}ᴀʏᴜᴢᴀᴡᴀ
-┃✮│➣ ${prefix}ʙᴏʀᴜᴛᴏ
-┃✮│➣ ${prefix}ᴄʜɪʜᴏ
-┃✮│➣ ${prefix}ᴄᴏsᴘʟᴀʏ
-┃✮│➣ ${prefix}ᴅᴇɪᴅᴀʀᴀ
-┃✮│➣ ${prefix}ᴅᴏʀᴀᴇᴍᴏɴ
-┃✮│➣ ${prefix}ᴇʟᴀɪɴᴀ
-┃✮│➣ ${prefix}ᴇᴍɪʟɪᴀ
-┃✮│➣ ${prefix}ᴇʀᴢᴀ
-┃✮│➣ ${prefix}ɢʀᴇᴍᴏʀʏ
-┃✮│➣ ${prefix}ʜᴇsᴛɪᴀ
-┃✮│➣ ${prefix}ʜᴜsʙᴜ
-┃✮│➣ ${prefix}ɪɴᴏʀɪ
-┃✮│➣ ${prefix}ɪsᴜᴢᴜ
-┃✮│➣ ${prefix}ɪᴛᴀᴄʜɪ
-┃✮│➣ ${prefix}ɪᴛᴏʀɪ
-┃✮│➣ ${prefix}ᴋᴀɢᴀ
-┃✮│➣ ${prefix}ᴋᴀɢᴜʀᴀ
-┃✮│➣ ${prefix}ᴋᴀᴋᴀsʜɪ
-┃✮│➣ ${prefix}ᴋᴀᴏʀɪ
-┃✮│➣ ${prefix}ᴋᴇɴᴇᴋɪ
-┃✮│➣ ${prefix}ᴋᴏᴛᴏʀɪ
-┃✮│➣ ${prefix}ᴋᴜʀᴜᴍɪ
-┃✮│➣ ${prefix}ʟᴏʟɪ
-┃✮│➣ ${prefix}ᴍᴀᴅᴀʀᴀ
-┃✮│➣ ${prefix}ᴍᴀɪᴅ
-┃✮│➣ ${prefix}ᴍᴇɢᴜᴍɪɴ
-┃✮│➣ ${prefix}ᴍɪᴋᴀsᴀ
-┃✮│➣ ${prefix}ᴍɪᴋᴜ
-┃✮│➣ ${prefix}ᴍɪɴᴀᴛᴏ
-┃✮│➣ ${prefix}ɴᴀʀᴜᴛᴏ
-┃✮│➣ ${prefix}ɴᴇᴋᴏɴɪᴍᴇ
-┃✮│➣ ${prefix}ɴᴇᴢᴜᴋᴏ
-┃✮│➣ ${prefix}ᴏɴᴇᴘɪᴇᴄᴇ
-┃✮│➣ ${prefix}ʀɪᴢᴇ
-┃✮│➣ ${prefix}sᴀɢɪʀɪ
-┃✮│➣ ${prefix}sᴀᴋᴜʀᴀ
-┃✮│➣ ${prefix}sᴀsᴜᴋᴇ
-┃✮│➣ ${prefix}ᴛsᴜɴᴀᴅᴇ
-┃✮│➣ ${prefix}ʏᴏᴛsᴜʙᴀ
-┃✮│➣ ${prefix}ʏᴜᴋɪ
-┃✮│➣ ${prefix}ʏᴜᴍᴇᴋᴏ
-╰━━━━━━━━━━━━━━━━━━━━━┈⊷`
 
-  await bad.sendMessage(m.chat, {
-    image: { url: 'https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png' },
-    caption: menuText,
-    contextInfo: {
-      forwardingScore: 999,
-      isForwarded: true,
-      forwardedNewsletterMessageInfo: {
-        newsletterJid: NEWSLETTER_JID,
-        newsletterName: "☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎",
-        serverMessageId: -1
-              }
-    }
-    }, { quoted: m })
-
-const _audio = menuAudio()
-if (_audio) {
-    await sleep(2000)
-    await bad.sendMessage(m.chat, {
-        audio: _audio,
-        mimetype: 'audio/mpeg',
-        ptt: false
-    }, { quoted: m })
-}
-}
-break
-
-case 'stickermenu': {
-  const menuText = `
-╭━━〔 🎨 sᴛɪᴄᴋᴇʀ ᴍᴇɴᴜ 〕━━┈⊷
-┃✮│➣ ${prefix}s
-┃✮│➣ ${prefix}sᴛɪᴄᴋᴇʀ
-┃✮│➣ ${prefix}ᴛᴀᴋᴇ
-┃✮│➣ ${prefix}sᴛᴇᴀʟ
-┃✮│➣ ${prefix}ᴡᴍ
-┃✮│➣ ${prefix}ᴛᴏɪᴍɢ
-┃✮│➣ ${prefix}ǫᴄ
-┃✮│➣ ${prefix}ᴇᴍᴏᴊɪᴍɪx
-┃✮│➣ ${prefix}sᴍᴇᴍᴇ
-┃✮│➣ ${prefix}ᴘᴀᴛ
-┃✮│➣ ${prefix}sʟᴀᴘ
-┃✮│➣ ${prefix}ʜᴜɢ
-┃✮│➣ ${prefix}ᴋɪss
-┃✮│➣ ${prefix}ʙɪᴛᴇ
-┃✮│➣ ${prefix}ʙʟᴜsʜ
-┃✮│➣ ${prefix}ʙᴏɴᴋ
-┃✮│➣ ${prefix}ʜɪɢʜꜰɪᴠᴇ
-┃✮│➣ ${prefix}ʜᴀɴᴅʜᴏʟᴅ
-┃✮│➣ ${prefix}ᴄᴜᴅᴅʟᴇ
-┃✮│➣ ${prefix}ᴄʀʏ
-┃✮│➣ ${prefix}ᴅᴀɴᴄᴇ
-╰━━━━━━━━━━━━━━━━━━━━━┈⊷`
-
-  await bad.sendMessage(m.chat, {
-    image: { url: 'https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png' },
-    caption: menuText,
-    contextInfo: {
-      forwardingScore: 999,
-      isForwarded: true,
-      forwardedNewsletterMessageInfo: {
-        newsletterJid: NEWSLETTER_JID,
-        newsletterName: "☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎",
-        serverMessageId: -1
-              }
-    }
-    }, { quoted: m })
-
-const _audio = menuAudio()
-if (_audio) {
-    await sleep(2000)
-    await bad.sendMessage(m.chat, {
-        audio: _audio,
-        mimetype: 'audio/mpeg',
-        ptt: false
-    }, { quoted: m })
-}
-}
-break
 
 case 'utilitymenu': {
   const menuText = `
@@ -2456,8 +2221,6 @@ case 'utilitymenu': {
 ┃ ├ ${prefix}dehaze
 ┃ ├ ${prefix}recolor
 ┃ ├ ${prefix}blur
-┃ ├ ${prefix}toanime
-┃ ├ ${prefix}cartoon
 ┃ ├ ${prefix}carbon
 ┃ ├ ${prefix}jail
 ┃ └ ${prefix}gun
@@ -2760,8 +2523,6 @@ case 'logomenu': {
 ┃ ├ ${prefix}ꜰʀᴏᴢᴇɴ
 ┃ ├ ${prefix}ɢᴀʟᴀxʏ
 ┃ ├ ${prefix}sᴘᴀᴄᴇ
-┃ ├ ${prefix}ᴀɴɪᴍᴇ
-┃ ├ ${prefix}ᴀɴɪᴍᴇᴛᴇxᴛ
 ┃ ├ ${prefix}ɢʀᴀꜰꜰɪᴛɪ
 ┃ ├ ${prefix}ɢʀᴀꜰꜰɪᴛɪᴛᴇxᴛ
 ┃ ├ ${prefix}ꜰʟᴏʀᴀʟ
@@ -4028,31 +3789,7 @@ case 'tagall':
       }
 
 
-case 'toanime':
-case 'cartoon': {
-  if (!quoted) return reply(`Reply to an image with ${prefix}toanime`)
-  if (!/image/.test(mime)) return reply('Reply to an image!')
-  
-  await loading()
-  
-  try {
-    let media = await quoted.download()
-    let uploadImage = require('./allfunc/Data6')
-    let imageUrl = await uploadImage(media)
-    
-    const apiUrl = `https://api.princetechn.com/toanime?url=${encodeURIComponent(imageUrl)}`
-    
-    await bad.sendMessage(m.chat, {
-      image: { url: apiUrl },
-      caption: '✅ *ᴄᴏɴᴠᴇʀᴛᴇᴅ ᴛᴏ ᴀɴɪᴍᴇ sᴛʏʟᴇ*'
-    }, { quoted: m })
-    
-  } catch (err) {
-    console.error('toanime error:', err)
-    reply('❌ ғᴀɪʟᴇᴅ ᴛᴏ ᴄᴏɴᴠᴇʀᴛ ᴛᴏ ᴀɴɪᴍᴇ')
-  }
-}
-break
+
 
 case 'hidetag': {
   if (!m.isGroup) return reply("╭━━〔 ᴇʀʀᴏʀ 〕━━┈⊷\n┃◈ ɢʀᴏᴜᴘ ᴄᴏᴍᴍᴀɴᴅ ᴏɴʟʏ\n╰━━━━━━━━━━━━━━━┈⊷")
@@ -4445,63 +4182,7 @@ break
 
 
 
-// ═══════════════════════════════════════════════════════════
-// RANDOM ANIME IMAGE COMMANDS
-// ═══════════════════════════════════════════════════════════
-case 'akiyama': case 'ana': case 'art': case 'asuna': case 'ayuzawa':
 
-case 'boruto': case 'chiho': case 'deidara': case 'doraemon':
-
-case 'elaina': case 'emilia': case 'erza': case 'gremory': case 'hestia':
-
-case 'husbu': case 'inori': case 'isuzu': case 'itachi': case 'itori':
-
-case 'kaga': case 'kagura': case 'kakashi': case 'kaori': case 'keneki':
-
-case 'kotori': case 'kurumi': case 'loli': case 'madara': case 'megumin':
-
-case 'mikasa': case 'miku': case 'minato': case 'naruto': case 'nekonime':
-
-case 'nezuko': case 'onepiece': case 'rize': case 'sagiri': case 'sakura':
-
-case 'sasuke': case 'tsunade': case 'yotsuba': case 'yuki': case 'yumeko': {
-
-  await loading()
-
-  
-
-  try {
-
-    // Using multiple free anime APIs
-
-    const apis = [
-      "https://api.waifu.pics/sfw/waifu",
-      "https://nekos.best/api/v2/neko",
-      "https://api.waifu.im/search/?is_nsfw=false"
-      ]
-    
-    const randomApi = apis[Math.floor(Math.random() * apis.length)]
-    const res = await fetch(randomApi)
-    const data = await res.json()
-    
-    let imageUrl
-    if (data.url) imageUrl = data.url
-    else if (data.results && data.results[0]) imageUrl = data.results[0].url
-    else if (data.results && data.results[0].url) imageUrl = data.results[0].url
-    
-    if (!imageUrl) throw new Error('No image found')
-    
-    await bad.sendMessage(m.chat, {
-      image: { url: imageUrl },
-      caption: `*${command.toUpperCase()}*\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ︎︎`
-    }, { quoted: m })
-    
-  } catch (err) {
-    console.error(`${command} error:`, err)
-    reply('ғᴀɪʟᴇᴅ ᴛᴏ ғᴇᴛᴄʜ ɪᴍᴀɢᴇ. ᴛʀʏ ᴀɢᴀɪɴ!')
-  }
-}
-break
 
 
 
@@ -5491,32 +5172,7 @@ case 'city': case 'night': case 'sunset': case 'rain': {
   }, { quoted: m })
 }
 break
-// ============= COSPLAY =============
 
-case 'cosplay': {
-  await loading()
-  
-  try {
-    const res = await fetch('https://api.waifu.im/search/?included_tags=cosplay&is_nsfw=false')
-    const data = await res.json()
-    
-    if (data.images && data.images[0]) {
-      await bad.sendMessage(m.chat, {
-        image: { url: data.images[0].url },
-        caption: `*◆ ᴄᴏsᴘʟᴀʏ*\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ︎︎`
-      }, { quoted: m })
-    } else {
-      throw new Error('No cosplay found')
-    }
-  } catch (err) {
-    // Fallback to Unsplash
-    await bad.sendMessage(m.chat, {
-      image: { url: 'https://source.unsplash.com/800x600/?cosplay,anime,costume' },
-      caption: `*◆ ᴄᴏsᴘʟᴀʏ*\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ︎︎`
-    }, { quoted: m })
-  }
-}
-break
 
 // ═══════════════════════════════════════════════════════════
 // EPHOTO360 TEXT MAKER COMMANDS
@@ -6496,29 +6152,6 @@ case 'apkdl': {
 }
 break;
 
-// ═══════════════════════════════════════════════════════════
-// TOMP4 - Convert Sticker to MP4
-// ═══════════════════════════════════════════════════════════
-case 'tomp4': {
-  if (!m.quoted) return reply("🖼️ Reply to a *sticker or gif* with tomp4");
-  let mime = m.quoted.mimetype || '';
-  if (!/webp|gif/.test(mime)) return reply("⚠️ Reply must be a sticker or gif");
-
-  try {
-    let media = await bad.downloadMediaMessage(m.quoted);
-    await bad.sendMessage(m.chat, {
-      video: media,
-      mimetype: 'video/mp4',
-      caption: "🎬 Converted to MP4"
-    }, { quoted: m });
-  } catch (e) {
-    console.log(e);
-    reply("❌ Failed to convert to MP4");
-  }
-}
-break;
-
-// ═══════════════════════════════════════════════════════════
 // TOMP3 - Convert Video to MP3
 // ═══════════════════════════════════════════════════════════
 case 'tomp3': {
@@ -7768,22 +7401,7 @@ ${error.message}
 }
 break
 
-case 'maid-pic': {
-  await loading()
-  
-  try {
-    const imageUrl = `https://Omegatech-api.dixonomega.tech/api/maid`
-    
-    await bad.sendMessage(m.chat, {
-      image: { url: imageUrl },
-      caption: `*◆ ᴍᴀɪᴅ*\n\n> ʀᴀɴᴅᴏᴍ ᴍᴀɪᴅ ᴀɴɪᴍᴇ ɪᴍᴀɢᴇ 👗`
-    }, { quoted: m })
-  } catch (err) {
-    console.error('Maid error:', err)
-    reply('⚠️ ғᴀɪʟᴇᴅ ᴛᴏ ғᴇᴛᴄʜ ɪᴍᴀɢᴇ.')
-  }
-}
-break
+
 
 case 'milf': {
   await loading()
@@ -7802,22 +7420,7 @@ case 'milf': {
 }
 break
 
-case 'neko2': {
-  await loading()
-  
-  try {
-    const imageUrl = `https://Omegatech-api.dixonomega.tech/api/neko`
-    
-    await bad.sendMessage(m.chat, {
-      image: { url: imageUrl },
-      caption: `*◆ ɴᴇᴋᴏ*\n\n> ʀᴀɴᴅᴏᴍ ɴᴇᴋᴏ ᴀɴɪᴍᴇ ɪᴍᴀɢᴇ 🐱`
-    }, { quoted: m })
-  } catch (err) {
-    console.error('Neko2 error:', err)
-    reply('⚠️ ғᴀɪʟᴇᴅ ᴛᴏ ғᴇᴛᴄʜ ɪᴍᴀɢᴇ.')
-  }
-}
-break
+
 
 case 'telegramstalk':
 case 'tgstalk': {
@@ -8437,119 +8040,7 @@ case 'guess': {
 }
 break
 
-case 'waifu': case 'neko': case 'megumin': case 'shinobu': {
-  await loading()
-  
-  try {
-    const res = await fetch(`https://api.waifu.pics/sfw/${command}`)
-    const data = await res.json()
-    
-    if (data.url) {
-      await bad.sendMessage(m.chat, {
-        image: { url: data.url },
-        caption: `*◆ ${command.toUpperCase()}*\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ`
-      }, { quoted: m })
-    } else {
-      throw new Error('No image found')
-    }
-  } catch (err) {
-    console.error(`${command} error:`, err)
-    reply('❌ ғᴀɪʟᴇᴅ ᴛᴏ ғᴇᴛᴄʜ ɪᴍᴀɢᴇ.')
-  }
-}
-break
 
-case 'naruto': case 'sasuke': case 'itachi': case 'kakashi': case 'madara':
-case 'sakura': case 'nezuko': case 'miku': case 'mikasa': case 'elaina': {
-  await loading()
-  
-  try {
-    // Using Nekos.best API - more reliable
-    const res = await fetch('https://nekos.best/api/v2/neko')
-    const data = await res.json()
-    
-    if (data.results && data.results[0]) {
-      await bad.sendMessage(m.chat, {
-        image: { url: data.results[0].url },
-        caption: `*◆ ${command.toUpperCase()} ᴀɴɪᴍᴇ*\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ`
-      }, { quoted: m })
-    } else {
-      throw new Error('No image found')
-    }
-  } catch (err) {
-    console.error(`${command} error:`, err)
-    reply('❌ ғᴀɪʟᴇᴅ ᴛᴏ ғᴇᴛᴄʜ ɪᴍᴀɢᴇ.')
-  }
-}
-break
-
-case 'akiyama': case 'ana': case 'asuna': case 'boruto': case 'chiho':
-case 'deidara': case 'doraemon': case 'emilia': case 'erza': case 'gremory':
-case 'hestia': case 'inori': case 'isuzu': case 'itori': case 'kaga':
-case 'kagura': case 'kaori': case 'keneki': case 'kotori': case 'kurumi':
-case 'loli': case 'onepiece': case 'rize': case 'sagiri': case 'tsunade':
-case 'yotsuba': case 'yuki1': case 'yumeko': {
-  await loading()
-  
-  try {
-    // Using waifu.im API - high quality anime images
-    const res = await fetch('https://api.waifu.im/search/?included_tags=waifu&is_nsfw=false')
-    const data = await res.json()
-    
-    if (data.images && data.images[0]) {
-      await bad.sendMessage(m.chat, {
-        image: { url: data.images[0].url },
-        caption: `*◆ ${command.toUpperCase()} ᴀɴɪᴍᴇ*\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ`
-      }, { quoted: m })
-    } else {
-      throw new Error('No image found')
-    }
-  } catch (err) {
-    console.error(`${command} error:`, err)
-    reply('❌ ғᴀɪʟᴇᴅ ᴛᴏ ғᴇᴛᴄʜ ɪᴍᴀɢᴇ.')
-  }
-}
-break
-
-case 'husbu': case 'minato': {
-  await loading()
-  
-  try {
-    const res = await fetch('https://api.waifu.im/search/?included_tags=husbando&is_nsfw=false')
-    const data = await res.json()
-    
-    if (data.images && data.images[0]) {
-      await bad.sendMessage(m.chat, {
-        image: { url: data.images[0].url },
-        caption: `*◆ ${command.toUpperCase()} ᴀɴɪᴍᴇ*\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ`
-      }, { quoted: m })
-    } else {
-      throw new Error('No image found')
-    }
-  } catch (err) {
-    reply('❌ ғᴀɪʟᴇᴅ ᴛᴏ ғᴇᴛᴄʜ ɪᴍᴀɢᴇ.')
-  }
-}
-break
-
-case 'nekonime': case 'art': {
-  await loading()
-  
-  try {
-    const res = await fetch('https://nekos.best/api/v2/neko')
-    const data = await res.json()
-    
-    if (data.results && data.results[0]) {
-      await bad.sendMessage(m.chat, {
-        image: { url: data.results[0].url },
-        caption: `*◆ ${command.toUpperCase()}*\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ`
-      }, { quoted: m })
-    }
-  } catch (err) {
-    reply('❌ ғᴀɪʟᴇᴅ ᴛᴏ ғᴇᴛᴄʜ ɪᴍᴀɢᴇ.')
-  }
-}
-break
 
 //═══════════════════════════════════════════════════════
 // 🎤 K-POP IMAGES
@@ -9137,281 +8628,12 @@ case 'mobilelegends': {
 }
 break;
 
-case 'wallmlnime':
-case 'mlnime': {
-    try {
-        await reply('🎨 ғᴇᴛᴄʜɪɴɢ ᴍʟ ᴀɴɪᴍᴇ ᴡᴀʟʟᴘᴀᴘᴇʀ...');
-        
-        const prompt = encodeURIComponent('Mobile Legends anime style wallpaper, anime heroes, epic, high quality 4k');
-        const imageUrl = `https://image.pollinations.ai/prompt/${prompt}?width=1920&height=1080&nologo=true&enhance=true`;
-        
-        await bad.sendMessage(from, {
-            image: { url: imageUrl },
-            caption: `🎨 *ᴍʟ ᴀɴɪᴍᴇ ᴡᴀʟʟᴘᴀᴘᴇʀ*`
-        }, { quoted: m });
-        
-    } catch (error) {
-        console.error('WallMLNime Error:', error);
-        await reply('❌ ғᴀɪʟᴇᴅ ᴛᴏ ғᴇᴛᴄʜ ᴡᴀʟʟᴘᴀᴘᴇʀ.');
-    }
-}
-break;
 
 
 
 
-case 'anime':
-case 'animeinfo': {
-  if (!text) return reply(`*ᴜsᴀɢᴇ:* ${prefix}anime <anime name>\n\nᴇxᴀᴍᴘʟᴇ: ${prefix}anime naruto`)
-  
-  await loading()
-  
-  try {
-    const res = await fetch(`https://api.princetechn.com/api/anime?title=${encodeURIComponent(text)}`)
-    const data = await res.json()
-    
-    if (data.title) {
-      let animeInfo = `*◆ ᴀɴɪᴍᴇ ɪɴғᴏ*\n\n`
-      animeInfo += `*ᴛɪᴛʟᴇ:* ${data.title}\n`
-      animeInfo += `*ᴇᴘɪsᴏᴅᴇs:* ${data.episodes}\n`
-      animeInfo += `*ʀᴀᴛɪɴɢ:* ${data.rating} ⭐\n`
-      animeInfo += `*ɢᴇɴʀᴇs:* ${data.genres}\n`
-      animeInfo += `*sᴛᴀᴛᴜs:* ${data.status}\n`
-      animeInfo += `*sʏɴᴏᴘsɪs:* ${data.synopsis}\n\n`
-      animeInfo += `> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ`
-      
-      if (data.image) {
-        await bad.sendMessage(m.chat, {
-          image: { url: data.image },
-          caption: animeInfo
-        }, { quoted: m })
-      } else {
-        reply(animeInfo)
-      }
-    } else {
-      reply('❌ ᴀɴɪᴍᴇ ɴᴏᴛ ғᴏᴜɴᴅ')
-    }
-  } catch (err) {
-    console.error('Anime error:', err)
-    reply('❌ ғᴀɪʟᴇᴅ ᴛᴏ ғᴇᴛᴄʜ ᴀɴɪᴍᴇ ɪɴғᴏ. ᴛʀʏ ᴀɢᴀɪɴ!')
-  }
-}
-break
-
-case 'animesearch': {
-  if (!isCreator) return reply('ᴏᴡɴᴇʀ ᴏɴʟʏ.')
-  if (!text) return reply(`ᴡʜɪᴄʜ ᴀɴɪᴍᴇ ᴀʀᴇ ʏᴏᴜ ʟᴏᴏᴋɪɴ ғᴏʀ?`)
-  
-  const malScraper = require('mal-scraper')
-  const anime = await malScraper.getInfoFromName(text).catch(() => null)
-  if (!anime) return reply(`ᴄᴏᴜʟᴅ ɴᴏᴛ ғɪɴᴅ`)
-  
-  let animetxt = `
-🎀 *ᴛɪᴛʟᴇ: ${anime.title}*
-🎋 *ᴛʏᴘᴇ: ${anime.type}*
-🎐 *ᴘʀᴇᴍɪᴇʀᴇᴅ ᴏɴ: ${anime.premiered}*
-💠 *ᴛᴏᴛᴀʟ ᴇᴘɪsᴏᴅᴇs: ${anime.episodes}*
-📈 *sᴛᴀᴛᴜs: ${anime.status}*
-💮 *ɢᴇɴʀᴇs: ${anime.genres}
-📍 *sᴛᴜᴅɪᴏ: ${anime.studios}*
-🌟 *sᴄᴏʀᴇ: ${anime.score}*
-💎 *ʀᴀᴛɪɴɢ: ${anime.rating}*
-🏅 *ʀᴀɴᴋ: ${anime.ranked}*
-💫 *ᴘᴏᴘᴜʟᴀʀɪᴛʏ: ${anime.popularity}*
-✮ *ᴛʀᴀɪʟᴇʀ: ${anime.trailer}*
-🌐 *ᴜʀʟ: ${anime.url}*
-❄ *ᴅᴇsᴄʀɪᴘᴛɪᴏɴ:* ${anime.synopsis}*`
-  
-  await bad.sendMessage(m.chat,{
-    image:{url:anime.picture}, 
-    caption:animetxt
-  },{quoted:m})
-}
-break
-
-// ═══════════════════════════════════════════════════════════
-// ANIME REACTION COMMANDS (ALL SFW)
-// ═══════════════════════════════════════════════════════════
-
-case 'animewave':
-case 'animesmile':
-case 'animepoke':
-case 'animewink':
-case 'animebonk':
-case 'animebully':
-case 'animeyeet':
-case 'animebite':
-case 'animelick':
-case 'animekill':
-case 'animehighfive':
-case 'animecringe':
-case 'animedance':
-case 'animehappy':
-case 'animeglomp':
-case 'animesmug':
-case 'animeblush': {
-  if (!isCreator) return reply('ᴏᴡɴᴇʀ ᴏɴʟʏ.')
-  
-  const action = command.replace('anime', '')
-  try {
-    waifudd = await axios.get(`https://waifu.pics/api/sfw/${action}`)
-    await bad.sendMessage(m.chat, { 
-      image: { url:waifudd.data.url} , 
-      caption: 'sᴜᴄᴄᴇss ✅'
-    }, { quoted:m })
-  } catch (err) {
-    return reply('ᴇʀʀᴏʀ!')
-  }
-}
-break
-// ═══════════════════════════════════════════════════════════
-// STICKER COMMANDS
-// ═══════════════════════════════════════════════════════════
-
-case 'sticker': {
-  if (!m.quoted) return reply(`ʀᴇᴘʟʏ ɪᴍᴀɢᴇ ᴏʀ ᴠɪᴅᴇᴏ ᴡɪᴛʜ ᴄᴏᴍᴍᴀɴᴅ ${prefix + command}`)
-  
-  if (/image/.test(mime)) {
-    let media = await quoted.download()
-    let encmedia = await bad.sendImageAsSticker(from, media, m, { 
-      packname: global.packname, 
-      author: global.author 
-    })
-    await fs.unlinkSync(encmedia)
-  } else if (/video/.test(mime)) {
-    if ((quoted.msg || quoted).seconds > 11) return reply('ᴍᴀx 10s')
-    let media = await quoted.download()
-    let encmedia = await bad.sendVideoAsSticker(from, media, m, { 
-      packname: global.packname, 
-      author: global.author 
-    })
-    await fs.unlinkSync(encmedia)
-  } else {
-    return reply(`sᴇɴᴅ ɪᴍᴀɢᴇ ᴏʀ ᴠɪᴅᴇᴏ ᴡɪᴛʜ ᴄᴏᴍᴍᴀɴᴅ ${prefix + command}\nᴠɪᴅᴇᴏ ᴅᴜʀᴀᴛɪᴏɴ ᴏɴʟʏ 1-9s`)
-  }
-}
-break
-
-case 'take':
-case 'steal': {
-    if (!m.quoted) return reply('❌ ʀᴇᴘʟʏ ᴛᴏ ᴀ sᴛɪᴄᴋᴇʀ!');
-    if (!m.quoted.mimetype || !/webp/.test(m.quoted.mimetype)) {
-        return reply('❌ ᴛʜᴀᴛ\'s ɴᴏᴛ ᴀ sᴛɪᴄᴋᴇʀ!');
-    }
-    
-    try {
-        await loading();
-        
-        // Get custom name or use default
-        let packname = text || ' sᴛɪᴄᴋᴇʀs';
-        let author = '༒︎ 𝑺𝑯𝑨𝑫𝑶𝑾 ༒︎';
-        
-        // Download the sticker
-        let media = await bad.downloadMediaMessage(m.quoted);
-        
-        // Add EXIF data
-        let stickerWithExif = await addExif(media, packname, author);
-        
-        // Send back with new metadata
-        await bad.sendMessage(m.chat, {
-            sticker: stickerWithExif
-        }, { quoted: m });
-        
-        reply(`✅ sᴛɪᴄᴋᴇʀ sᴛᴏʟᴇɴ!\n📦 ᴘᴀᴄᴋ: ${packname}\n✍️ ᴀᴜᴛʜᴏʀ: ${author}`);
-        
-    } catch (error) {
-        console.error('sᴛᴇᴀʟ sᴛɪᴄᴋᴇʀ ᴇʀʀᴏʀ:', error);
-        reply('❌ ғᴀɪʟᴇᴅ ᴛᴏ sᴛᴇᴀʟ sᴛɪᴄᴋᴇʀ');
-    }
-}
-break;
 
 
-// ============= ALTERNATIVE: TAKE WITH AUTHOR (if you want separate pack and author) =============
-case 'wm':
-case 'swm':
-case 'takefull': {
-    const quoted = m.quoted ? m.quoted : m;
-    
-    if (!quoted || !quoted.message || !quoted.message.stickerMessage) {
-        return reply('❌ ʀᴇᴘʟʏ ᴛᴏ ᴀ sᴛɪᴄᴋᴇʀ!\n\n*ᴜsᴀɢᴇ:*\n.wm pack|author\n.wm ЅΙᒪᐯΞᎡ|ᴛᴇᴄʜ');
-    }
-    
-    try {
-        // Split text by | or use defaults
-        let packname, author;
-        
-        if (text && text.includes('|')) {
-            const split = text.split('|');
-            packname = split[0].trim() || '⏤͟͞❮❮ ♧✰༒︎ 𝑺𝑯𝑨𝑫𝑶𝑾 ༒︎✰🜲⃤҉ ❯❯⏤͟͞';
-            author = split[1].trim() || '⏤͟͞❮❮ ♧✰☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝘽𝙊𝙔 ☠︎︎✰🜲⃤҉ ❯❯⏤͟͞';
-        } else {
-            packname = text || '⏤͟͞❮❮ ♧✰༒︎ 𝑺𝑯𝑨𝑫𝑶𝑾 ༒︎✰🜲⃤҉ ❯❯⏤͟͞';
-            author = '⏤͟͞❮❮ ♧✰☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝘽𝙊𝙔 ☠︎︎✰🜲⃤҉ ❯❯⏤͟͞';
-        }
-        
-        await reply('✨ ᴄʀᴇᴀᴛɪɴɢ sᴛɪᴄᴋᴇʀ...');
-        
-        const media = await quoted.download();
-        
-        await bad.sendMessage(m.chat, {
-            sticker: media,
-            packname: packname,
-            author: author
-        }, { quoted: m });
-        
-        await reply(`✅ *sᴛɪᴄᴋᴇʀ ᴄʀᴇᴀᴛᴇᴅ!*\n\n📦 ᴘᴀᴄᴋ: ${packname}\n👤 ᴀᴜᴛʜᴏʀ: ${author}`);
-        
-    } catch (error) {
-        console.error('WM Sticker Error:', error);
-        await reply(`❌ ғᴀɪʟᴇᴅ: ${error.message}`);
-    }
-}
-break;
-
-case 'toimg': {
-  if (!m.quoted) return reply(`ʀᴇᴘʟʏ ᴛᴏ ᴀɴʏ sᴛɪᴄᴋᴇʀ.`)
-  let mime = m.quoted.mtype
-  
-  if (mime =="imageMessage" || mime =="stickerMessage") {
-    let media = await bad.downloadAndSaveMediaMessage(m.quoted)
-    let name = getRandom('.png')
-    exec(`ffmpeg -i ${media} ${name}`, (err) => {
-      fs.unlinkSync(media)
-      let buffer = fs.readFileSync(name)
-      bad.sendMessage(m.chat, { image: buffer }, { quoted: m })
-      fs.unlinkSync(name)
-    })
-  } else return reply(`ᴘʟᴇᴀsᴇ ʀᴇᴘʟʏ ᴛᴏ ɴᴏɴ ᴀɴɪᴍᴀᴛᴇᴅ sᴛɪᴄᴋᴇʀ`)
-}
-break
-
-case 'qc': {
-  if (!text) return reply('ᴜsᴇ ғᴏʀᴍᴀᴛ: *.qc ʏᴏᴜʀ ǫᴜᴏᴛᴇ*')
-  
-  const name = m.pushName || 'ᴜsᴇʀ'
-  const quote = text.trim()
-  
-  let profilePic
-  try {
-    profilePic = await bad.profilePictureUrl(m.sender, 'image')
-  } catch {
-    profilePic = 'Telegrammmm'
-  }
-  
-  const url = `https://www.laurine.site/api/generator/qc?text=${encodeURIComponent(quote)}&name=${encodeURIComponent(name)}&photo=${encodeURIComponent(profilePic)}`
-  
-  try {
-    await bad.sendImageAsSticker(m.chat, url, m, {
-      packname: global.packname,
-      author: global.author
-    })
-  } catch (err) {
-    console.error('ǫᴜᴏᴛᴇ ᴄᴀʀᴅ sᴛɪᴄᴋᴇʀ ɢᴇɴᴇʀᴀᴛɪᴏɴ ᴇʀʀᴏʀ:', err)
-    reply('ᴏᴏᴘs🤨! ғᴀɪʟᴇᴅ ᴛᴏ ᴄʀᴇᴀᴛᴇ ʏᴏᴜʀ ǫᴜᴏᴛᴇ sᴛɪᴄᴋᴇʀ.')
-  }
-}
-break
 case 'fakereact':
 case 'freact': {
   if (!isCreator && !isPremium) return reply('ᴘʀᴇᴍɪᴜᴍ ᴏʀ ᴏᴡɴᴇʀ ᴏɴʟʏ.')
@@ -9494,68 +8716,7 @@ ${prefix + command} and https://whatsapp.com/channel/0029Vb8XwkCA89MpQ00xrw20 |�
   }
 }
 break
-case 'emojimix': {
-  if (!text || !text.includes('+')) {
-    return reply('ᴜsᴇ ғᴏʀᴍᴀᴛ: .emojimix 😀+😎')
-  }
-  
-  const [emoji1, emoji2] = text.split('+').map(e => e.trim())
-  const url = `https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(emoji1)}_${encodeURIComponent(emoji2)}`
-  
-  try {
-    const res = await fetch(url)
-    const json = await res.json()
-    
-    if (json.results && json.results[0]) {
-      await bad.sendImageAsSticker(m.chat, json.results[0].url, m, {
-        packname: global.packname,
-        author: global.author
-      })
-    } else {
-      reply('ᴇᴍᴏᴊɪ ᴄᴏᴍʙɪɴᴀᴛɪᴏɴ ɴᴏᴛ ғᴏᴜɴᴅ!')
-    }
-  } catch (err) {
-    reply('ғᴀɪʟᴇᴅ ᴛᴏ ᴍɪx ᴇᴍᴏᴊɪs.')
-  }
-}
-break
 
-case 'smeme': {
-  if (!m.quoted || !/image/.test(mime)) {
-    return reply('ʀᴇᴘʟʏ ᴛᴏ ᴀɴ ɪᴍᴀɢᴇ ᴡɪᴛʜ ᴛᴇxᴛ!\nᴇxᴀᴍᴘʟᴇ: .smeme ᴛᴏᴘ ᴛᴇxᴛ|ʙᴏᴛᴛᴏᴍ ᴛᴇxᴛ')
-  }
-  
-  if (!text) return reply('ᴘʀᴏᴠɪᴅᴇ ᴛᴇxᴛ!\nᴇxᴀᴍᴘʟᴇ: .smeme ᴛᴏᴘ|ʙᴏᴛᴛᴏᴍ')
-  
-  const [top, bottom] = text.split('|')
-  const media = await quoted.download()
-  const uploadImage = require('./allfunc/Data6')
-  const imageUrl = await uploadImage(media)
-  
-  const memeUrl = `https://api.memegen.link/images/custom/${encodeURIComponent(top || '_')}/${encodeURIComponent(bottom || '_')}.png?background=${imageUrl}`
-  
-  await bad.sendImageAsSticker(m.chat, memeUrl, m, {
-    packname: global.packname,
-    author: global.author
-  })
-}
-break
-
-case 'cry': case 'kill': case 'hug': case 'pat': case 'lick':
-case 'kiss': case 'bite': case 'yeet': case 'bully': case 'bonk':
-case 'wink': case 'poke': case 'nom': case 'slap': case 'smile':
-case 'wave': case 'awoo': case 'blush': case 'smug': case 'glomp':
-case 'happy': case 'dance': case 'cringe': case 'cuddle': case 'highfive':
-case 'shinobu': case 'handhold': {
-  axios.get(`https://api.waifu.pics/sfw/${command}`)
-    .then(({data}) => {
-      bad.sendImageAsSticker(from, data.url, m, { 
-        packname: global.packname, 
-        author: global.author 
-      })
-    })
-}
-break
 
 // ═══════════════════════════════════════════════════════════
 // UTILITY COMMANDS
@@ -9887,33 +9048,7 @@ case 'blur': {
 }
 break;
 
-case 'toanime':
-case 'cartoon': {
-    const quoted = m.quoted ? m.quoted : m;
-    const mime = (quoted.msg || quoted).mimetype || '';
-    
-    if (!/image/.test(mime)) return reply('❌ ʀᴇᴘʟʏ ᴛᴏ ᴀɴ ɪᴍᴀɢᴇ!');
-    
-    try {
-        await reply('🎨 ᴄᴏɴᴠᴇʀᴛɪɴɢ ᴛᴏ ᴀɴɪᴍᴇ...');
-        
-        const media = await quoted.download();
-        
-        // Using Pollinations for anime style conversion
-        const prompt = encodeURIComponent('anime style art, cartoon illustration');
-        const imageUrl = `https://image.pollinations.ai/prompt/${prompt}?width=1024&height=1024&nologo=true&enhance=true`;
-        
-        await bad.sendMessage(from, {
-            image: { url: imageUrl },
-            caption: '✨ *ᴀɴɪᴍᴇ sᴛʏʟᴇ ᴄᴏɴᴠᴇʀsɪᴏɴ*'
-        }, { quoted: m });
-        
-    } catch (error) {
-        console.error('ToAnime Error:', error);
-        await reply('❌ ғᴀɪʟᴇᴅ ᴛᴏ ᴄᴏɴᴠᴇʀᴛ.');
-    }
-}
-break;
+
 
 case 'carbon': {
     if (!text) return reply(`❌ ᴘʀᴏᴠɪᴅᴇ ᴄᴏᴅᴇ!\n\nᴇxᴀᴍᴘʟᴇ: ${prefix + command} console.log("hello")`);
@@ -11107,7 +10242,7 @@ case 'gfx9': case 'gfx10': case 'gfx11': case 'gfx12': {
             'gfx8': 'neon glow style',
             'gfx9': 'thunder lightning style',
             'gfx10': 'water splash style',
-            'gfx11': 'anime manga style',
+            'gfx11': 'modern digital style',
             'gfx12': 'retro vintage style'
         };
         
@@ -11519,27 +10654,7 @@ case 'space': {
 }
 break;
 
-case 'anime':
-case 'animetext': {
-    if (!text) return reply(`❌ ᴘʟᴇᴀsᴇ ᴘʀᴏᴠɪᴅᴇ ᴀ ɴᴀᴍᴇ ᴛᴏ ɢᴇɴᴇʀᴀᴛᴇ ᴀɴɪᴍᴇ ᴛᴇxᴛ\n\nᴇxᴀᴍᴘʟᴇ: ${prefix + command} ʏᴏᴜʀ ɴᴀᴍᴇ`);
-    
-    try {
-        await reply('🎌 ᴄʀᴇᴀᴛɪɴɢ ᴀɴɪᴍᴇ ᴛᴇxᴛ...');
-        
-        const prompt = encodeURIComponent(`Anime style text "${text}", Japanese anime aesthetic, manga style, kawaii design`);
-        const imageUrl = `https://image.pollinations.ai/prompt/${prompt}?width=1024&height=1024&nologo=true&enhance=true`;
-        
-        await bad.sendMessage(from, {
-            image: { url: imageUrl },
-            caption: `🎌 *ᴀɴɪᴍᴇ ᴛᴇxᴛ ᴄʀᴇᴀᴛᴇᴅ*\n\n📝 ᴛᴇxᴛ: ${text}`
-        }, { quoted: m });
-        
-    } catch (error) {
-        console.error('Anime Text Error:', error);
-        await reply('❌ ғᴀɪʟᴇᴅ ᴛᴏ ᴄʀᴇᴀᴛᴇ. ᴘʟᴇᴀsᴇ ᴛʀʏ ᴀɢᴀɪɴ.');
-    }
-}
-break;
+
 
 case 'graffiti':
 case 'graffititext': {
@@ -11835,25 +10950,7 @@ case 'aidetect': {
 }
 break;
 
-case 'animagen':
-case 'animagine': {
-  if (!text) return reply(`*ᴜsᴀɢᴇ:* ${prefix}animagen <prompt>\n\n*ᴇxᴀᴍᴘʟᴇ:* ${prefix}animagen anime girl blue hair`)
-  
-  await loading()
-  
-  try {
-    const apiUrl = `https://api.ryzendesu.vip/api/ai/animagine?prompt=${encodeURIComponent(text)}`
-    
-    await bad.sendMessage(m.chat, {
-      image: { url: apiUrl },
-      caption: `*◆ ᴀɴɪᴍᴀɢɪɴᴇ ᴀɪ*\n\n📝 ᴘʀᴏᴍᴘᴛ: ${text}\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ`
-    }, { quoted: m })
-  } catch (err) {
-    console.error('Animagine error:', err)
-    reply('❌ ғᴀɪʟᴇᴅ ᴛᴏ ɢᴇɴᴇʀᴀᴛᴇ ᴀɴɪᴍᴇ.')
-  }
-}
-break
+
 
 // ============= IMAGE SEARCH COMMANDS =============
 
@@ -12883,7 +11980,7 @@ if (antilink && /(https?:\/\/|www\.|chat\.whatsapp\.com)/i.test(body)) {
                         'image': 'omg love the pic cutie! 😍✨ you look amazing babe 💕 hehe send more hun 😘',
                         'video': 'ooh a video! 🎥 can\'t wait to watch it love 😚💖 you\'re so creative sweetheart 🥰',
                         'audio': 'aww a voice note! 🎵 i love hearing from you babe 😘💕 your voice is so cute hun 🥺',
-                        'sticker': 'hehe that sticker is adorable! 😆💕 just like you cutie 😚✨',
+                        'sticker': 'hehe that is adorable! 😆💕 just like you cutie 😚✨',
                         'document': 'got your file love! 📄 thanks for sharing babe 🥰💖'
                     }
                     
