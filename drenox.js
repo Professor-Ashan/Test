@@ -844,17 +844,19 @@ if (global.autobio) {
         let msg = await bad.sendMessage(from, { text: frames[0] })
         loadingAnimations.set(from, msg.key)
         
-        for (let i = 1; i < frames.length; i++) {
-          await sleep(400)
-          try {
-            await bad.sendMessage(from, {
-              text: frames[i],
-              edit: msg.key
-            })
-          } catch {
-            await bad.sendMessage(from, { text: frames[i] })
-          }
-        }
+    for (let i = 1; i < frames.length; i++) {
+      await sleep(300)
+      try {
+        await bad.sendMessage(from, {
+          text: frames[i],
+          edit: msg.key
+        })
+      } catch {
+        // Fallback if edit fails
+      }
+    }
+    await sleep(200)
+    await bad.sendMessage(from, { delete: msg.key })
         
         loadingAnimations.delete(from)
       } catch (error) {
