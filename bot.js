@@ -70,19 +70,17 @@ const gracefulShutdown = (signal) => {
 
 // ========== STYLISH UI HELPERS ==========
 const getStylishStartMessage = (name) => {
-  return `⚡ *WELCOME TO DANGEROUS MD BOT* ⚡\n\n` +
-         `┏━━━━━━━━━━━━━━━━━━━━━━━━┓\n` +
-         `┃  👤 *USER:* *${name.toUpperCase()}*\n` +
-         `┃  🤖 *STATUS:* *ONLINE & SECURE*\n` +
-         `┃  🛠️ *VERSION:* *2.0.0*\n` +
-         `┗━━━━━━━━━━━━━━━━━━━━━━━━┛\n\n` +
-         `*AVAILABLE COMMANDS:*\n` +
-         `┌──────────────────────┐\n` +
-         `│ ⤷ */pair <number>*\n` +
-         `│ ⤷ */unpair <number>*\n` +
-         `│ ⤷ */help - View more*\n` +
-         `└──────────────────────┘\n\n` +
-         `_POWERED BY SHADOW OFFICIAL_`;
+  return `✬ REM BUG
+
+┏━━━━━━━━━━━━━━━┓
+⚠️ *User:* ${name}
+⚙️ *Bot:* REM BUG
+┗━━━━━━━━━━━━━━━┛
+🌐 /pair ➛ Connect Device
+🌐 /delbot ➛ Remove Device
+🌑 /listpair ➛ View All Devices
+━━━━━━━━━━━━━━━
+REM TO THE WORLD`;
 };
 
 const PHOTO_URL = "https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png";
@@ -110,8 +108,8 @@ const handleStart = async (msg) => {
       parse_mode: 'Markdown',
       reply_markup: {
         inline_keyboard: [
-          [{ text: "👑 Owner", url: "https://t.me/DangerousSeller" }, { text: "📢 Channel", url: "https://whatsapp.com/channel/0029Vb8XwkCA89MpQ00xrw20" }],
-          [{ text: "🚀 Start Pairing", callback_data: "start_pairing" }]
+          [{ text: "START BOT 🙂", callback_data: "start_pairing" }, { text: "CHANNEL 🌐", url: "https://whatsapp.com/channel/0029Vb8XwkCA89MpQ00xrw20" }],
+          [{ text: "CHANNEL‼️", url: "https://whatsapp.com/channel/0029Vb8XwkCA89MpQ00xrw20" }, { text: "INFO 👤", url: "https://t.me/DangerousSeller" }]
         ]
       }
     });
