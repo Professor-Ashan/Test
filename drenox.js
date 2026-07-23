@@ -957,7 +957,7 @@ if (getSetting(m.chat, "antilink", false) && m.isGroup) {
     // Enhanced regex to detect ALL types of links
     let linkRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)|([a-zA-Z0-9-]+\.(com|net|org|io|co|in|me|xyz|info|biz|app|dev|tech|online|site|club|store|shop|live|tv|gg|cc|tk|ml|ga|cf|gq)[^\s]*)/gi;
     
-    if (m.text && linkRegex.test(m.text)) {
+    if (linkRegex.test(m.text)) {
         // CRITICAL FIX: Skip bot's own messages
         if (m.key.fromMe) return;
         
@@ -11648,42 +11648,77 @@ module.exports = async function handleMessage(bad, mek, chatUpdate, store) {
             
             if (fromMe) continue
             
+// ==================== EXTRACT MESSAGE BODY ====================
+// group only
+if (!chatId.endsWith('@g.us')) return
+
+// ignore bot messages
+if (msg.key.fromMe) return
+
+// body extract
+const messageTypes = msg.message
+
+const chatId = msg.key.remoteJid
+let body = messageTypes?.conversation || 
+           messageTypes?.extendedTextMessage?.text || 
+           messageTypes?.imageMessage?.caption || 
+           messageTypes?.videoMessage?.caption || 
+           messageTypes?.audioMessage?.caption ||
+           messageTypes?.documentMessage?.caption ||
+           ''
+
+// bot admin check
+const metadata = await bad.groupMetadata(chatId)
+const botId = bad.user.id.split(':')[0] + '@s.whatsapp.net'
+const isBotAdmin = metadata.participants.find(p => p.id === botId)?.admin
+if (!isBotAdmin) return
+
+// antilink setting
+const antilink = getSetting(chatId, "antilink") || "delete"
+
+// link detection
+if (antilink && /(https?:\/\/|www\.|chat\.whatsapp\.com)/i.test(body)) {
+  if (antilink === "delete") {
+    await bad.sendMessage(chatId, { delete: msg.key })
+  }
+}
+            
             // ==================== AUTO PRESENCE ====================
-            const lastPresence = activePresence.get(from)
+            const lastPresence = activePresence.get(chatId)
             if (!lastPresence || Date.now() - lastPresence > 3000) {
-                activePresence.set(from, Date.now())
+                activePresence.set(chatId, Date.now())
                 
                 if (global.autoPresence && global.autoPresence !== 'off') {
                     const presenceType = global.autoPresence === 'typing' ? 'composing' 
                                        : global.autoPresence === 'recording' ? 'recording'
                                        : 'available'
                     
-                    await bad.sendPresenceUpdate(presenceType, from)
+                    await bad.sendPresenceUpdate(presenceType, chatId)
                     
                     setTimeout(async () => {
                         try {
-                            await bad.sendPresenceUpdate('paused', from)
+                            await bad.sendPresenceUpdate('paused', chatId)
                         } catch {}
                     }, 10000)
                 }
                 
                 if (!global.autoPresence || global.autoPresence === 'off') {
                     if (global.autoTyping) {
-                        await bad.sendPresenceUpdate('composing', from)
+                        await bad.sendPresenceUpdate('composing', chatId)
                         
                         setTimeout(async () => {
                             try {
-                                await bad.sendPresenceUpdate('paused', from)
+                                await bad.sendPresenceUpdate('paused', chatId)
                             } catch {}
                         }, 10000)
                     }
                     
                     if (global.autoRecording) {
-                        await bad.sendPresenceUpdate('recording', from)
+                        await bad.sendPresenceUpdate('recording', chatId)
                         
                         setTimeout(async () => {
                             try {
-                                await bad.sendPresenceUpdate('paused', from)
+                                await bad.sendPresenceUpdate('paused', chatId)
                             } catch {}
                         }, 10000)
                     }
@@ -11691,23 +11726,15 @@ module.exports = async function handleMessage(bad, mek, chatUpdate, store) {
             }
             
             // ==================== AUTO REPLY (DMs) ====================
-            const body_extract = msg.message?.conversation || 
-                               msg.message?.extendedTextMessage?.text || 
-                               msg.message?.imageMessage?.caption || 
-                               msg.message?.videoMessage?.caption || 
-                               msg.message?.audioMessage?.caption ||
-                               msg.message?.documentMessage?.caption ||
-                               ''
-
             if (global.autoReply && !from.endsWith('@g.us')) {
-                if (!body_extract || body_extract.startsWith('.') || body_extract.startsWith('!') || body_extract.startsWith('/') || body_extract.startsWith('#')) continue
+                if (!body || body.startsWith('.') || body.startsWith('!') || body.startsWith('/') || body.startsWith('#')) continue
                 
                 const lastReply = autoReplyCache.get(from)
                 if (lastReply && Date.now() - lastReply < 10000) continue
                 
                 await bad.sendPresenceUpdate('composing', from)
                 
-                const aiResponse = await getClaudeResponse(body_extract)
+                const aiResponse = await getClaudeResponse(body)
                 
                 if (aiResponse) {
                     await new Promise(resolve => setTimeout(resolve, 2000))
@@ -11733,93 +11760,91 @@ module.exports = async function handleMessage(bad, mek, chatUpdate, store) {
             }
             
             // ==================== CHATBOT (GROUPS) ====================
-            const sender = msg.key.participant || msg.key.remoteJid
-            if (from.endsWith('@g.us') && global.chatbot && global.chatbot.has(from)) {
-                console.log(`🤖 Chatbot enabled in group: ${from}`)
-                
-                const botNumber = bad.user.id.split(':')[0] + '@s.whatsapp.net'
-                const isBotMentioned = msg.message?.extendedTextMessage?.contextInfo?.mentionedJid?.includes(botNumber)
-                
-                const quotedMsg = msg.message?.extendedTextMessage?.contextInfo?.quotedMessage
-                const isReplyToBot = msg.message?.extendedTextMessage?.contextInfo?.participant === botNumber ||
-                                     msg.message?.extendedTextMessage?.contextInfo?.remoteJid === botNumber
-                
-                const hasMedia = msg.message?.imageMessage || 
-                               msg.message?.videoMessage || 
-                               msg.message?.audioMessage ||
-                               msg.message?.stickerMessage ||
-                               msg.message?.documentMessage
-                
-                if (!body_extract && !hasMedia && !isBotMentioned && !isReplyToBot) continue
-                if (!body_extract && !hasMedia) continue
-                
-                if (body_extract && (body_extract.startsWith('.') || body_extract.startsWith('!') || body_extract.startsWith('/') || body_extract.startsWith('#'))) {
-                    console.log('⏭️ Skipping command')
-                    continue
-                }
-                
-                const cacheKey = `${from}-${(body_extract || '').substring(0, 20)}`
-                const lastResponse = chatbotCache.get(cacheKey)
-                if (lastResponse && Date.now() - lastResponse < 15000 && !isBotMentioned && !isReplyToBot) {
-                    console.log('⏭️ Skipping cache')
-                    continue
-                }
-                
-                console.log(`👤 User: ${sender}`)
-                console.log(`💬 Message: "${body_extract.substring(0, 50)}..."`)
-                
-                let chatbotQuery = body_extract || 'hi'
-                
-                if (isBotMentioned) {
-                    chatbotQuery = (body_extract || '').replace(/@\d+/g, '').trim() || 'hi'
-                }
-                
-                if (isReplyToBot && quotedMsg) {
-                    chatbotQuery = body_extract || 'hi'
-                }
-                
-                if (hasMedia) {
-                    let mediaType = 'file'
-                    if (msg.message?.imageMessage) mediaType = 'image'
-                    else if (msg.message?.videoMessage) mediaType = 'video'
-                    else if (msg.message?.audioMessage) mediaType = 'audio'
-                    else if (msg.message?.stickerMessage) mediaType = 'sticker'
-                    else if (msg.message?.documentMessage) mediaType = 'document'
-                    
-                    if (!body_extract) {
-                        const mediaResponses = {
-                            'image': 'omg love the pic cutie! 😍✨ you look amazing babe 💕 hehe send more hun 😘',
-                            'video': 'ooh a video! 🎥 can\'t wait to watch it love 😚💖 you\'re so creative sweetheart 🥰',
-                            'audio': 'aww a voice note! 🎵 i love hearing from you babe 😘💕 your voice is so cute hun 🥺',
-                            'sticker': 'hehe that is adorable! 😆💕 just like you cutie 😚✨',
-                            'document': 'got your file love! 📄 thanks for sharing babe 🥰💖'
-                        }
-                        
-                        const response = mediaResponses[mediaType] || 'aww thanks for sharing babe! 💕😘'
-                        await bad.sendMessage(from, { text: response }, { quoted: msg })
-                        chatbotCache.set(cacheKey, Date.now())
-                        await bad.sendPresenceUpdate('paused', from)
-                        continue
-                    }
-                }
-                
-                await bad.sendPresenceUpdate('composing', from)
-                
-                const aiResponse = await getChatGPTResponse(chatbotQuery, sender, from)
-                
-                if (aiResponse) {
-                    console.log(`✅ Sending: "${aiResponse.substring(0, 50)}..."`)
-                    await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1500))
-                    
-                    await bad.sendMessage(from, { 
-                        text: aiResponse 
-                    }, { quoted: msg })
-                    
-                    chatbotCache.set(cacheKey, Date.now())
-                }
-                
-                await bad.sendPresenceUpdate('paused', from)
+            if (!global.chatbot || !global.chatbot.has(from)) continue
+            
+            console.log(`🤖 Chatbot enabled in group: ${from}`)
+            
+            const botNumber = bad.user.id.split(':')[0] + '@s.whatsapp.net'
+            const isBotMentioned = messageTypes?.extendedTextMessage?.contextInfo?.mentionedJid?.includes(botNumber)
+            
+            const quotedMsg = messageTypes?.extendedTextMessage?.contextInfo?.quotedMessage
+            const isReplyToBot = messageTypes?.extendedTextMessage?.contextInfo?.participant === botNumber ||
+                                 messageTypes?.extendedTextMessage?.contextInfo?.remoteJid === botNumber
+            
+            const hasMedia = messageTypes?.imageMessage || 
+                           messageTypes?.videoMessage || 
+                           messageTypes?.audioMessage ||
+                           messageTypes?.stickerMessage ||
+                           messageTypes?.documentMessage
+            
+            if (!body && !hasMedia && !isBotMentioned && !isReplyToBot) continue
+            
+            if (body && (body.startsWith('.') || body.startsWith('!') || body.startsWith('/') || body.startsWith('#'))) {
+                console.log('⏭️ Skipping command')
+                continue
             }
+            
+            const cacheKey = `${from}-${body.substring(0, 20)}`
+            const lastResponse = chatbotCache.get(cacheKey)
+            if (lastResponse && Date.now() - lastResponse < 15000 && !isBotMentioned && !isReplyToBot) {
+                console.log('⏭️ Skipping cache')
+                continue
+            }
+            
+            console.log(`👤 User: ${sender}`)
+            console.log(`💬 Message: "${body.substring(0, 50)}..."`)
+            
+            let chatbotQuery = body
+            
+            if (isBotMentioned) {
+                chatbotQuery = body.replace(/@\d+/g, '').trim() || 'hi'
+            }
+            
+            if (isReplyToBot && quotedMsg) {
+                chatbotQuery = `${body}`
+            }
+            
+            if (hasMedia) {
+                let mediaType = 'file'
+                if (messageTypes?.imageMessage) mediaType = 'image'
+                else if (messageTypes?.videoMessage) mediaType = 'video'
+                else if (messageTypes?.audioMessage) mediaType = 'audio'
+                else if (messageTypes?.stickerMessage) mediaType = 'sticker'
+                else if (messageTypes?.documentMessage) mediaType = 'document'
+                
+                if (!body) {
+                    const mediaResponses = {
+                        'image': 'omg love the pic cutie! 😍✨ you look amazing babe 💕 hehe send more hun 😘',
+                        'video': 'ooh a video! 🎥 can\'t wait to watch it love 😚💖 you\'re so creative sweetheart 🥰',
+                        'audio': 'aww a voice note! 🎵 i love hearing from you babe 😘💕 your voice is so cute hun 🥺',
+                        'sticker': 'hehe that is adorable! 😆💕 just like you cutie 😚✨',
+                        'document': 'got your file love! 📄 thanks for sharing babe 🥰💖'
+                    }
+                    
+                    const response = mediaResponses[mediaType] || 'aww thanks for sharing babe! 💕😘'
+                    await bad.sendMessage(from, { text: response }, { quoted: msg })
+                    chatbotCache.set(cacheKey, Date.now())
+                    await bad.sendPresenceUpdate('paused', from)
+                    continue
+                }
+            }
+            
+            await bad.sendPresenceUpdate('composing', from)
+            
+            const aiResponse = await getChatGPTResponse(chatbotQuery, sender, from)
+            
+            if (aiResponse) {
+                console.log(`✅ Sending: "${aiResponse.substring(0, 50)}..."`)
+                await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1500))
+                
+                await bad.sendMessage(from, { 
+                    text: aiResponse 
+                }, { quoted: msg })
+                
+                chatbotCache.set(cacheKey, Date.now())
+            }
+            
+            await bad.sendPresenceUpdate('paused', from)
             
         } catch (err) {
             console.error('❌ Message handler error:', err.message)
