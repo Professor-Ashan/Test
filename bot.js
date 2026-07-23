@@ -70,17 +70,17 @@ const gracefulShutdown = (signal) => {
 
 // ========== STYLISH UI HELPERS ==========
 const getStylishStartMessage = (name) => {
-  return `✬ REM BUG
+  return `✬ *DANGEROUS MD BOT*
 
 ┏━━━━━━━━━━━━━━━┓
-⚠️ *User:* ${name}
-⚙️ *Bot:* REM BUG
+⚠️ *User:* _${name}_
+⚙️ *Bot:* *DANGEROUS MD BOT*
 ┗━━━━━━━━━━━━━━━┛
-🌐 /pair ➛ Connect Device
-🌐 /delbot ➛ Remove Device
-🌑 /listpair ➛ View All Devices
+🌐 /pair ➛ _Connect Device_
+🌐 /delbot ➛ _Remove Device_
+🌑 /listpair ➛ _View All Devices_
 ━━━━━━━━━━━━━━━
-REM TO THE WORLD`;
+_REM TO THE WORLD_`;
 };
 
 const PHOTO_URL = "https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png";
