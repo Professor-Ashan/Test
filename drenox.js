@@ -808,28 +808,24 @@ if (global.autobio) {
 }
     
     const reply = async (teks) => {
-  try {
-    await bad.sendMessage(from, {
-      text: teks,
-      mentions: [sender]
-    });
-  } catch (error) {
-    await bad.sendMessage(from, {
-      text: teks
-    });
-  }
-};
+        if (!teks || teks.trim() === "") return;
+        try {
+            await bad.sendMessage(from, {
+                text: teks,
+                mentions: [sender]
+            });
+        } catch (error) {
+            await bad.sendMessage(from, {
+                text: teks
+            });
+        }
+    };
 
     const menuCommands = ['menu', 'allmenu', 'downloadmenu', 'dlmenu', 'admin', 'adminmenu', 'gamemenu', 'gphelp', 'groupmenu', 'helpmenu', 'help']
     
     async function loading() {
-
-  // ❌ DM me loading band
-//  if (!m.isGroup) return
-
-  if (!menuCommands.includes(command)) {
-    return
-  }
+        if (!m.isGroup) return;
+        if (!command || !menuCommands.includes(command)) return;
       
       const frames = [
         "╭━━〔 ⟦ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ⟧〕━━┈⊷\n┃✮│ ▱▱▱▱▱▱▱▱▱▱ 0%\n┃✮│ ⚡ ɪɴɪᴛɪᴀʟɪᴢɪɴɢ...\n╰━━━━━━━━━━━━━━┈⊷",
@@ -10388,44 +10384,21 @@ module.exports = async function handleMessage(bad, mek, chatUpdate, store) {
                 } catch (err) {}
             }
             
-            if (fromMe) continue
-            
-// ==================== EXTRACT MESSAGE BODY ====================
-// group only
-if (!chatId.endsWith('@g.us')) return
+		            if (fromMe) continue
+		            
+		            const chatId = msg.key.remoteJid
+		            const messageTypes = msg.message
+		            if (!messageTypes) continue;
 
-// ignore bot messages
-if (msg.key.fromMe) return
-
-// body extract
-const messageTypes = msg.message
-
-const chatId = msg.key.remoteJid
-let body = messageTypes?.conversation || 
-           messageTypes?.extendedTextMessage?.text || 
-           messageTypes?.imageMessage?.caption || 
-           messageTypes?.videoMessage?.caption || 
-           messageTypes?.audioMessage?.caption ||
-           messageTypes?.documentMessage?.caption ||
-           ''
-
-// bot admin check
-const metadata = await bad.groupMetadata(chatId)
-const botId = bad.user.id.split(':')[0] + '@s.whatsapp.net'
-const isBotAdmin = metadata.participants.find(p => p.id === botId)?.admin
-if (!isBotAdmin) return
-
-// antilink setting
-const antilink = getSetting(chatId, "antilink") || "delete"
-
-// link detection
-if (antilink && /(https?:\/\/|www\.|chat\.whatsapp\.com)/i.test(body)) {
-  if (antilink === "delete") {
-    await bad.sendMessage(chatId, { delete: msg.key })
-  }
-}
-            
-            // ==================== AUTO PRESENCE ====================
+		            let body = messageTypes?.conversation || 
+		                       messageTypes?.extendedTextMessage?.text || 
+		                       messageTypes?.imageMessage?.caption || 
+		                       messageTypes?.videoMessage?.caption || 
+		                       messageTypes?.audioMessage?.caption ||
+		                       messageTypes?.documentMessage?.caption ||
+		                       ''
+	            
+	            // ==================== AUTO PRESENCE ====================
             const lastPresence = activePresence.get(chatId)
             if (!lastPresence || Date.now() - lastPresence > 3000) {
                 activePresence.set(chatId, Date.now())
