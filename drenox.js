@@ -884,8 +884,22 @@ if (isBanned && !isCreator) {
       }
     }
 
+    // Self Mode Check: Allow group protections to work even in self mode
     if (!bad.public && !isCreator) {
-      return
+        // If it's a command, block it
+        if (isCmd) return;
+        
+        // If it's not a group, block it
+        if (!m.isGroup) return;
+        
+        // In groups, only allow processing if some protection is enabled
+        const hasProtection = getSetting(m.chat, "antilink", false) || 
+                             getSetting(m.chat, "antibill", false) || 
+                             getSetting(m.chat, "feature.antibadword", false) || 
+                             getSetting(m.chat, "feature.antispam", false) || 
+                             getSetting(m.chat, "feature.antibot", false);
+                             
+        if (!hasProtection) return;
     }
 if (m.isGroup && !isCreator) {
     const antibillEnabled = getSetting(m.chat, "antibill", false);
@@ -957,20 +971,11 @@ if (getSetting(m.chat, "antilink", false) && m.isGroup) {
     let linkRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)|([a-zA-Z0-9-]+\.(com|net|org|io|co|in|me|xyz|info|biz|app|dev|tech|online|site|club|store|shop|live|tv|gg|cc|tk|ml|ga|cf|gq)[^\s]*)/gi;
     
     if (linkRegex.test(m.text)) {
-        // Skip bot's own messages but still process others in self mode
-        if (m.key.fromMe && !bad.public) {
-            if (isCmd) return;
-        } else if (m.key.fromMe) {
-            return;
-        }
+        // Skip bot's own messages
+        if (m.key.fromMe) return;
         
-        if (isAdmins || isCreator) {
-            if (!isCmd && !bad.public) {
-                // Continue for self-mode deletion
-            } else {
-                return;
-            }
-        }
+        // Skip admins/creator unless in special circumstances
+        if (isAdmins || isCreator) return;
         
         const mode = getSetting(m.chat, "antilink");
         
@@ -1047,11 +1052,16 @@ if (getSetting(m.chat, "feature.antispam", false) && m.isGroup) {
     spamData.last = now;
 }
 
-if (getSetting(m.chat, "feature.antibadword", false)) {
-   const badWords = ["fuck", "Kuta", "sex", "Bharwa","Randi","Land","Lan","Choduga","Motherchot","bharwe","kutakabacha"]
+if (getSetting(m.chat, "feature.antibadword", false) && m.isGroup) {
+   if (m.key.fromMe || isAdmins || isCreator) return;
+   
    if (badWords.some(word => m.text?.toLowerCase().includes(word))) {
-      await bad.sendMessage(m.chat, { text: `🚫 @${m.sender.split('@')[0]} ᴡᴀᴛᴄʜ ʏᴏᴜʀ ʟᴀɴɢuᴀɢᴇ ʙᴇ ᴡᴀʀɴᴇᴅ ɪ ᴡᴏɴ'ᴛ ᴡᴀʀɴ ʏᴏʏ ᴀғᴀɪɴ 🤨`, mentions: [m.sender] })
-      await bad.sendMessage(m.chat, { delete: m.key })
+      await bad.sendMessage(m.chat, { text: `🚫 @${m.sender.split('@')[0]} ᴡᴀᴛᴄʜ ʏᴏᴜʀ ʟᴀɴɢᴜᴀɢᴇ! ʙᴀᴅ ᴡᴏʀᴅs ᴀʀᴇ ɴᴏᴛ ᴀʟʟᴏᴡᴇᴅ ʜᴇʀᴇ.`, mentions: [m.sender] })
+      try {
+          await bad.sendMessage(m.chat, { delete: m.key })
+      } catch (e) {
+          console.log("Failed to delete badword:", e)
+      }
    }
 }
 
