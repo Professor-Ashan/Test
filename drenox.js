@@ -957,11 +957,20 @@ if (getSetting(m.chat, "antilink", false) && m.isGroup) {
     let linkRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)|([a-zA-Z0-9-]+\.(com|net|org|io|co|in|me|xyz|info|biz|app|dev|tech|online|site|club|store|shop|live|tv|gg|cc|tk|ml|ga|cf|gq)[^\s]*)/gi;
     
     if (linkRegex.test(m.text)) {
-        // Skip if sender is creator or admin
-        if (isCreator || isAdmins) return;
+        // Skip bot's own messages but still process others in self mode
+        if (m.key.fromMe && !bad.public) {
+            if (isCmd) return;
+        } else if (m.key.fromMe) {
+            return;
+        }
         
-        // CRITICAL FIX: Skip bot's own messages but still process others in self mode
-        if (m.key.fromMe && isCreator) return;
+        if (isAdmins || isCreator) {
+            if (!isCmd && !bad.public) {
+                // Continue for self-mode deletion
+            } else {
+                return;
+            }
+        }
         
         const mode = getSetting(m.chat, "antilink");
         
