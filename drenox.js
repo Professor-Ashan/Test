@@ -1733,6 +1733,9 @@ case 'listmenu': {
 ┃✮│➣ ${prefix}ɢᴀᴍᴇᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ᴀɪᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ᴍɪsᴄᴍᴇɴᴜ
+┃✮│➣ ${prefix}stalkmenu
+┃✮│➣ ${prefix}toolsmenu
+┃✮│➣ ${prefix}textmakermenu
 ╰━━━━━━━━━━━━━━━┈⊷
 
 > ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ`
@@ -2107,6 +2110,236 @@ if (_audio) {
         ptt: false
     }, { quoted: m })
 }
+}
+break
+
+case 'stalkmenu': {
+  const menuText = `
+╭━━〔 🔍 sᴛᴀʟᴋ ᴍᴇɴᴜ 〕━━┈⊷
+┃✮│➣ ${prefix}ɪɢsᴛᴀʟᴋ
+┃✮│➣ ${prefix}ᴛᴛsᴛᴀʟᴋ
+┃✮│➣ ${prefix}ᴛᴛsᴛᴀʟᴋ2
+┃✮│➣ ${prefix}ɪᴘsᴛᴀʟᴋ
+┃✮│➣ ${prefix}ɢɪᴛʜᴜʙsᴛᴀʟᴋ
+┃✮│➣ ${prefix}ᴛɢᴄʜᴀɴɴᴇʟsᴛᴀʟᴋ
+┃✮│➣ ${prefix}ᴛɢɢʀᴏᴜᴘsᴛᴀʟᴋ
+┃✮│➣ ${prefix}ᴛɢsᴛᴀʟᴋ
+┃✮│➣ ${prefix}ᴡᴀsᴛᴀʟᴋ
+┃✮│➣ ${prefix}ᴢᴏᴏᴍsᴇᴀʀᴄʜ
+╰━━━━━━━━━━━━━━━━━━━━━┈⊷`
+
+  await bad.sendMessage(m.chat, {
+    image: { url: 'https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png' },
+    caption: menuText,
+    contextInfo: {
+      forwardingScore: 999,
+      isForwarded: true,
+      forwardedNewsletterMessageInfo: {
+        newsletterJid: NEWSLETTER_JID,
+        newsletterName: "☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎",
+        serverMessageId: -1
+      }
+    }
+  }, { quoted: m })
+
+  const _audio = menuAudio()
+  if (_audio) {
+    await sleep(2000)
+    await bad.sendMessage(m.chat, {
+      audio: _audio,
+      mimetype: 'audio/mpeg',
+      ptt: false
+    }, { quoted: m })
+  }
+}
+break
+
+case 'toolsmenu': {
+  const menuText = `
+╭━━〔 🛠️ ᴛᴏᴏʟs ᴍᴇɴᴜ 〕━━┈⊷
+┃
+┃ 🔧 ᴄᴏɴᴠᴇʀsɪᴏɴ & ᴜᴛɪʟɪᴛʏ
+┃ ├ ${prefix}currency
+┃ ├ ${prefix}convert
+┃ ├ ${prefix}translate
+┃ ├ ${prefix}tr
+┃ ├ ${prefix}calc
+┃ ├ ${prefix}calculate
+┃ ├ ${prefix}tts
+┃ ├ ${prefix}tourl
+┃ ├ ${prefix}tinyurl
+┃ ├ ${prefix}shorturl
+┃ ├ ${prefix}tovn
+┃ └ ${prefix}readmore
+┃
+┃ 🎨 ɪᴍᴀɢᴇ ᴛᴏᴏʟs
+┃ ├ ${prefix}removebg
+┃ ├ ${prefix}nobg
+┃ ├ ${prefix}enhance
+┃ ├ ${prefix}remini
+┃ ├ ${prefix}upscale
+┃ ├ ${prefix}hdr
+┃ ├ ${prefix}dehaze
+┃ ├ ${prefix}recolor
+┃ ├ ${prefix}blur
+┃ ├ ${prefix}carbon
+┃ ├ ${prefix}jail
+┃ └ ${prefix}gun
+┃
+┃ 📝 ɢᴇɴᴇʀᴀᴛᴏʀs
+┃ ├ ${prefix}qr
+┃ ├ ${prefix}qrcode
+┃ ├ ${prefix}readqr
+┃ ├ ${prefix}book
+┃ ├ ${prefix}bookcover
+┃ ├ ${prefix}obfuscate
+┃ └ ${prefix}obf
+┃
+┃ 🔍 sᴇᴀʀᴄʜ & ɪɴғᴏ
+┃ ├ ${prefix}lyrics
+┃ ├ ${prefix}imdb
+┃ ├ ${prefix}movie
+┃ ├ ${prefix}ytsearch
+┃ ├ ${prefix}yts
+┃ ├ ${prefix}google
+┃ ├ ${prefix}weather
+┃ ├ ${prefix}weather2
+┃ ├ ${prefix}weatherinfo
+┃ ├ ${prefix}define
+┃ ├ ${prefix}wiki
+┃ ├ ${prefix}wikipedia
+┃ ├ ${prefix}news
+┃ ├ ${prefix}telegram
+┃ └ ${prefix}tg
+┃
+┃ 🔐 ᴏᴛʜᴇʀ
+┃ ├ ${prefix}ssweb
+┃ ├ ${prefix}ss
+┃ ├ ${prefix}myip
+┃ ├ ${prefix}recipe
+┃ ├ ${prefix}sciencefact
+┃ ├ ${prefix}read
+┃ ├ ${prefix}prog
+┃ └ ${prefix}programming
+┃
+╰━━━━━━━━━━━━━━━━━━━━━┈⊷`
+
+  await bad.sendMessage(m.chat, {
+    image: { url: 'https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png' },
+    caption: menuText,
+    contextInfo: {
+      forwardingScore: 999,
+      isForwarded: true,
+      forwardedNewsletterMessageInfo: {
+        newsletterJid: NEWSLETTER_JID,
+        newsletterName: "☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎",
+        serverMessageId: -1
+      }
+    }
+  }, { quoted: m })
+
+  const _audio = menuAudio()
+  if (_audio) {
+    await sleep(2000)
+    await bad.sendMessage(m.chat, {
+      audio: _audio,
+      mimetype: 'audio/mpeg',
+      ptt: false
+    }, { quoted: m })
+  }
+}
+break
+
+case 'textmakermenu': {
+  const menuText = `
+╭━━〔 ✍️ ᴛᴇxᴛ ᴍᴀᴋᴇʀ ᴍᴇɴᴜ 〕━━┈⊷
+┃
+┃ 🎨 ʙᴀsɪᴄ
+┃ ├ ${prefix}ᴛᴇxᴛɪᴍɢ
+┃ ├ ${prefix}ᴛxᴛ2ɪᴍɢ
+┃ ├ ${prefix}ᴛᴇxᴛ2ɪᴍɢ
+┃ └ ${prefix}ᴀɪᴛᴇxᴛ
+┃
+┃ 🌟 ʟᴏɢᴏs
+┃ ├ ${prefix}ʟᴏɢᴏ
+┃ ├ ${prefix}ʟᴏɢᴏ2
+┃ ├ ${prefix}ᴍᴀᴋᴇʟᴏɢᴏ2
+┃ ├ ${prefix}ɢᴀᴍɪɴɢ
+┃ ├ ${prefix}ɢᴀᴍɪɴɢʟᴏɢᴏ
+┃ ├ ${prefix}ɢꜰx1
+┃ ├ ${prefix}ɢꜰx2
+┃ ├ ${prefix}ɢꜰx3
+┃ ├ ${prefix}ɢꜰx4
+┃ ├ ${prefix}ɢꜰx5
+┃ ├ ${prefix}ɢꜰx6
+┃ ├ ${prefix}ɢꜰx7
+┃ ├ ${prefix}ɢꜰx8
+┃ ├ ${prefix}ɢꜰx9
+┃ ├ ${prefix}ɢꜰx10
+┃ ├ ${prefix}ɢꜰx11
+┃ ├ ${prefix}ɢꜰx12
+┃ ├ ${prefix}ʙʀᴀᴛ
+┃ └ ${prefix}ꜰᴜʀʙʀᴀᴛ
+┃
+┃ ⚡ ᴇꜰꜰᴇᴄᴛs
+┃ ├ ${prefix}ɴᴇᴏɴ
+┃ ├ ${prefix}ɴᴇᴏɴᴛᴇxᴛ
+┃ ├ ${prefix}ɢʟɪᴛᴄʜ
+┃ ├ ${prefix}ɢʟɪᴛᴄʜᴛᴇxᴛ
+┃ ├ ${prefix}3ᴅᴛᴇxᴛ
+┃ ├ ${prefix}ᴛᴇxᴛ3ᴅ
+┃ ├ ${prefix}ᴄʜʀᴏᴍᴇ
+┃ ├ ${prefix}ᴍᴇᴛᴀʟ
+┃ ├ ${prefix}ʟᴜxᴜʀʏɢᴏʟᴅ
+┃ ├ ${prefix}ɢᴏʟᴅᴛᴇxᴛ
+┃ ├ ${prefix}ʀᴀɪɴʙᴏᴡ
+┃ ├ ${prefix}ʀᴀɪɴʙᴏᴡᴛᴇxᴛ
+┃ ├ ${prefix}ɢʀᴀᴅɪᴇɴᴛ
+┃ ├ ${prefix}ɢʀᴀᴅɪᴇɴᴛᴛᴇxᴛ
+┃ ├ ${prefix}ꜰɪʀᴇ
+┃ ├ ${prefix}ꜰɪʀᴇᴛᴇxᴛ
+┃ ├ ${prefix}ʟɪɢʜᴛɴɪɴɢ
+┃ ├ ${prefix}ᴛʜᴜɴᴅᴇʀ
+┃ ├ ${prefix}ᴡᴀᴛᴇʀ
+┃ ├ ${prefix}ᴡᴀᴛᴇʀᴛᴇxᴛ
+┃ ├ ${prefix}ɪᴄᴇ
+┃ ├ ${prefix}ꜰʀᴏᴢᴇɴ
+┃ ├ ${prefix}ɢᴀʟᴀxʏ
+┃ ├ ${prefix}sᴘᴀᴄᴇ
+┃ ├ ${prefix}ɢʀᴀꜰꜰɪᴛɪ
+┃ ├ ${prefix}ɢʀᴀꜰꜰɪᴛɪᴛᴇxᴛ
+┃ ├ ${prefix}ꜰʟᴏʀᴀʟ
+┃ ├ ${prefix}ꜰʟᴏᴡᴇʀs
+┃ ├ ${prefix}ʀᴇᴛʀᴏ
+┃ ├ ${prefix}ʀᴇᴛʀᴏᴛᴇxᴛ
+┃ ├ ${prefix}ʜᴏʀʀᴏʀ
+┃ └ ${prefix}sᴄᴀʀʏ
+┃
+╰━━━━━━━━━━━━━━━━━━━━━┈⊷`
+
+  await bad.sendMessage(m.chat, {
+    image: { url: 'https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png' },
+    caption: menuText,
+    contextInfo: {
+      forwardingScore: 999,
+      isForwarded: true,
+      forwardedNewsletterMessageInfo: {
+        newsletterJid: NEWSLETTER_JID,
+        newsletterName: "☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎",
+        serverMessageId: -1
+      }
+    }
+  }, { quoted: m })
+
+  const _audio = menuAudio()
+  if (_audio) {
+    await sleep(2000)
+    await bad.sendMessage(m.chat, {
+      audio: _audio,
+      mimetype: 'audio/mpeg',
+      ptt: false
+    }, { quoted: m })
+  }
 }
 break
 
