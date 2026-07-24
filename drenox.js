@@ -696,17 +696,16 @@ async function handleMessage(bad, m, chatUpdate, store) {
 const budy = body
 
 // ========== PREFIX DETECTION ==========
-// Sirf ye 5 prefixes kaam karenge: . / # ! @
-const allowedPrefixes = ['.', '/', '#', '!', '@'];
+// Fixed: Only respond to the set prefix
+const allowedPrefix = global.prefix || '.';
 let prefix = '';
 let isCmd = false;
 
-for (let p of allowedPrefixes) {
-    if (body.startsWith(p)) {
-        prefix = p;
-        isCmd = true;
-        break;
-    }
+if (body.startsWith(allowedPrefix)) {
+    prefix = allowedPrefix;
+    isCmd = true;
+} else {
+    isCmd = false;
 }
 
 // ✅ Args & command
@@ -958,10 +957,11 @@ if (getSetting(m.chat, "antilink", false) && m.isGroup) {
     let linkRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)|([a-zA-Z0-9-]+\.(com|net|org|io|co|in|me|xyz|info|biz|app|dev|tech|online|site|club|store|shop|live|tv|gg|cc|tk|ml|ga|cf|gq)[^\s]*)/gi;
     
     if (linkRegex.test(m.text)) {
-        // CRITICAL FIX: Skip bot's own messages
-        if (m.key.fromMe) return;
+        // Skip if sender is creator or admin
+        if (isCreator || isAdmins) return;
         
-        if (isAdmins || isCreator) return;
+        // CRITICAL FIX: Skip bot's own messages but still process others in self mode
+        if (m.key.fromMe && isCreator) return;
         
         const mode = getSetting(m.chat, "antilink");
         
@@ -1825,13 +1825,8 @@ case 'listmenu': {
 ┃✮│➣ ${prefix}ᴅᴏᴡɴʟᴏᴀᴅᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ғᴜɴᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ɢᴀᴍᴇᴍᴇɴᴜ
-┃✮│➣ ${prefix}ᴜᴛɪʟɪᴛʏᴍᴇɴᴜ
-┃✮│➣ ${prefix}ᴠᴏɪᴄᴇᴍᴇɴᴜ
-┃✮│➣ ${prefix}ᴇᴍᴏᴊɪᴍᴇɴᴜ
-┃✮│➣ ${prefix}ʟᴏɢᴏᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ᴀɪᴍᴇɴᴜ
 ┃✮│➣ ${prefix}ᴍɪsᴄᴍᴇɴᴜ
-┃✮│➣ ${prefix}ɪᴍᴀɢᴇᴍᴇɴᴜ
 ╰━━━━━━━━━━━━━━━┈⊷
 
 > ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴀɴɢᴇʀᴏᴜs ᴍᴅ`
@@ -2218,373 +2213,15 @@ break
 
 
 
-case 'utilitymenu': {
-  const menuText = `
-╭━━〔 🛠️ ᴛᴏᴏʟs ᴍᴇɴᴜ 〕━━┈⊷
-┃
-┃ 🔧 ᴄᴏɴᴠᴇʀsɪᴏɴ & ᴜᴛɪʟɪᴛʏ
-┃ ├ ${prefix}currency
-┃ ├ ${prefix}convert
-┃ ├ ${prefix}translate
-┃ ├ ${prefix}tr
-┃ ├ ${prefix}calc
-┃ ├ ${prefix}calculate
-┃ ├ ${prefix}tts
-┃ ├ ${prefix}say
-┃ ├ ${prefix}tourl
-┃ ├ ${prefix}tinyurl
-┃ ├ ${prefix}shorturl
-┃ ├ ${prefix}tovn
-┃ └ ${prefix}readmore
-┃
-┃ 🎨 ɪᴍᴀɢᴇ ᴛᴏᴏʟs
-┃ ├ ${prefix}removebg
-┃ ├ ${prefix}nobg
-┃ ├ ${prefix}enhance
-┃ ├ ${prefix}remini
-┃ ├ ${prefix}upscale
-┃ ├ ${prefix}hdr
-┃ ├ ${prefix}dehaze
-┃ ├ ${prefix}recolor
-┃ ├ ${prefix}blur
-┃ ├ ${prefix}carbon
-┃ ├ ${prefix}jail
-┃ └ ${prefix}gun
-┃
-┃ 📝 ɢᴇɴᴇʀᴀᴛᴏʀs
-┃ ├ ${prefix}qr
-┃ ├ ${prefix}qrcode
-┃ ├ ${prefix}readqr
-┃ ├ ${prefix}book
-┃ ├ ${prefix}bookcover
-┃ ├ ${prefix}obfuscate
-┃ └ ${prefix}obf
-┃
-┃ 🔍 sᴇᴀʀᴄʜ & ɪɴғᴏ
-┃ ├ ${prefix}lyrics
-┃ ├ ${prefix}imdb
-┃ ├ ${prefix}movie
-┃ ├ ${prefix}ytsearch
-┃ ├ ${prefix}yts
-┃ ├ ${prefix}google
-┃ ├ ${prefix}weather
-┃ ├ ${prefix}weather2
-┃ ├ ${prefix}weatherinfo
-┃ ├ ${prefix}define
-┃ ├ ${prefix}wiki
-┃ ├ ${prefix}wikipedia
-┃ ├ ${prefix}news
-┃ ├ ${prefix}telegram
-┃ └ ${prefix}tg
-┃
-┃ 🔐 ᴏᴛʜᴇʀ
-┃ ├ ${prefix}ssweb
-┃ ├ ${prefix}ss
-┃ ├ ${prefix}myip
-┃ ├ ${prefix}recipe
-┃ ├ ${prefix}sciencefact
-┃ ├ ${prefix}read
-┃ ├ ${prefix}prog
-┃ └ ${prefix}programming
-┃
-╰━━━━━━━━━━━━━━━━━━━━━┈⊷`
+/* utilitymenu removed */
 
-  await bad.sendMessage(m.chat, {
-    image: { url: 'https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png' },
-    caption: menuText,
-    contextInfo: {
-      forwardingScore: 999,
-      isForwarded: true,
-      forwardedNewsletterMessageInfo: {
-        newsletterJid: NEWSLETTER_JID,
-        newsletterName: "☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎",
-        serverMessageId: -1
-              }
-    }
-    }, { quoted: m })
+/* voicemenu removed */
 
-const _audio = menuAudio()
-if (_audio) {
-    await sleep(2000)
-    await bad.sendMessage(m.chat, {
-        audio: _audio,
-        mimetype: 'audio/mpeg',
-        ptt: false
-    }, { quoted: m })
-}
-}
-break
+/* imagemenu removed */
 
-case 'voicemenu': {
-  const menuText = `
-╭━━〔 🎤 ᴠᴏɪᴄᴇ ᴍᴇɴᴜ 〕━━┈⊷
-┃✮│➣ ${prefix}ʙᴀss
-┃✮│➣ ${prefix}ʙʟᴏᴡɴ
-┃✮│➣ ${prefix}ᴅᴇᴇᴘ
-┃✮│➣ ${prefix}ᴇᴀʀʀᴀᴘᴇ
-┃✮│➣ ${prefix}ꜰᴀsᴛ
-┃✮│➣ ${prefix}ꜰᴀᴛ
-┃✮│➣ ${prefix}ɴɪɢʜᴛᴄᴏʀᴇ
-┃✮│➣ ${prefix}ʀᴇᴠᴇʀsᴇ
-┃✮│➣ ${prefix}ʀᴏʙᴏᴛ
-┃✮│➣ ${prefix}sʟᴏᴡ
-┃✮│➣ ${prefix}sᴍᴏᴏᴛʜ
-┃✮│➣ ${prefix}sǫᴜɪʀʀᴇʟ
-╰━━━━━━━━━━━━━━━━━━━━━┈⊷`
+/* reactionmenu removed */
 
-  await bad.sendMessage(m.chat, {
-    image: { url: 'https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png' },
-    caption: menuText,
-    contextInfo: {
-      forwardingScore: 999,
-      isForwarded: true,
-      forwardedNewsletterMessageInfo: {
-        newsletterJid: NEWSLETTER_JID,
-        newsletterName: "☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎",
-        serverMessageId: -1
-              }
-    }
-    }, { quoted: m })
-
-const _audio = menuAudio()
-if (_audio) {
-    await sleep(2000)
-    await bad.sendMessage(m.chat, {
-        audio: _audio,
-        mimetype: 'audio/mpeg',
-        ptt: false
-    }, { quoted: m })
-}
-}
-break
-
-case 'imagemenu': {
-  const menuText = `
-╭━━〔 🖼️ ɪᴍᴀɢᴇ ᴍᴇɴᴜ 〕━━┈⊷
-┃
-┃ 🎤 ᴋ-ᴘᴏᴘ
-┃ ├ ${prefix}blackpink
-┃ ├ ${prefix}randblackpink
-┃ ├ ${prefix}jennie
-┃ ├ ${prefix}jisoo
-┃ ├ ${prefix}jennie1
-┃ ├ ${prefix}rosee
-┃ ├ ${prefix}rose
-┃ ├ ${prefix}ryujin
-┃ ├ ${prefix}bts
-┃ └ ${prefix}exo
-┃
-┃ 🌸 ʀᴇᴀʟ ᴘᴇᴏᴘʟᴇ
-┃ ├ ${prefix}cecan
-┃ ├ ${prefix}cewek
-┃ ├ ${prefix}china
-┃ ├ ${prefix}chinese
-┃ ├ ${prefix}hijab
-┃ ├ ${prefix}indonesia
-┃ ├ ${prefix}indonesian
-┃ ├ ${prefix}japanese
-┃ ├ ${prefix}japan
-┃ ├ ${prefix}korean
-┃ ├ ${prefix}korea
-┃ ├ ${prefix}malaysia
-┃ ├ ${prefix}malaysian
-┃ ├ ${prefix}thailand
-┃ ├ ${prefix}thai
-┃ ├ ${prefix}vietnam
-┃ └ ${prefix}vietnamese
-┃
-┃ 🎨 ᴡᴀʟʟᴘᴀᴘᴇʀs
-┃ ├ ${prefix}cyber
-┃ ├ ${prefix}cyberpunk
-┃ ├ ${prefix}cybergirl
-┃ ├ ${prefix}hacker
-┃ ├ ${prefix}hackerwall
-┃ ├ ${prefix}technology
-┃ ├ ${prefix}tech
-┃ ├ ${prefix}mountain
-┃ ├ ${prefix}mountains
-┃ ├ ${prefix}space
-┃ ├ ${prefix}spacewall
-┃ ├ ${prefix}islamic
-┃ ├ ${prefix}islamicwall
-┃ ├ ${prefix}quran
-┃ ├ ${prefix}quranwall
-┃ ├ ${prefix}freefire
-┃ ├ ${prefix}ff
-┃ ├ ${prefix}gamewallpaper
-┃ ├ ${prefix}gamewall
-┃ ├ ${prefix}pubg
-┃ ├ ${prefix}pubgwall
-┃ ├ ${prefix}wallhp
-┃ ├ ${prefix}phonewallpaper
-┃ ├ ${prefix}wallml
-┃ ├ ${prefix}mobilelegends
-┃ ├ ${prefix}wallmlnime
-┃ └ ${prefix}mlnime
-┃
-╰━━━━━━━━━━━━━━━━━━━━━┈⊷`
-
-  await bad.sendMessage(m.chat, {
-    image: { url: 'https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png' },
-    caption: menuText,
-    contextInfo: {
-      forwardingScore: 999,
-      isForwarded: true,
-      forwardedNewsletterMessageInfo: {
-        newsletterJid: NEWSLETTER_JID,
-        newsletterName: "☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎",
-        serverMessageId: -1
-              }
-    }
-    }, { quoted: m })
-
-const _audio = menuAudio()
-if (_audio) {
-    await sleep(2000)
-    await bad.sendMessage(m.chat, {
-        audio: _audio,
-        mimetype: 'audio/mpeg',
-        ptt: false
-    }, { quoted: m })
-}
-}
-break
-
-case 'emojimenu': {
-  const menuText = `
-╭━━〔 😊 ʀᴇᴀᴄᴛɪᴏɴ ᴍᴇɴᴜ 〕━━┈⊷
-┃✮│➣ ${prefix}ʟᴀᴜɢʜ
-┃✮│➣ ${prefix}sʜʏ
-┃✮│➣ ${prefix}sᴀᴅ
-┃✮│➣ ${prefix}ᴍᴏᴏɴ
-┃✮│➣ ${prefix}ᴀɴɢᴇʀ
-┃✮│➣ ${prefix}ʜᴀᴘᴘʏ
-┃✮│➣ ${prefix}ᴄᴏɴꜰᴜsᴇᴅ
-┃✮│➣ ${prefix}ʜᴇᴀʀᴛ
-┃✮│➣ ${prefix}ᴄᴏᴏʟ
-┃✮│➣ ${prefix}ꜰɪʀᴇ
-┃✮│➣ ${prefix}sᴛᴀʀ
-┃✮│➣ ${prefix}ᴛʜᴜᴍʙsᴜᴘ
-╰━━━━━━━━━━━━━━━━━━━━━┈⊷`
-
-  await bad.sendMessage(m.chat, {
-    image: { url: 'https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png' },
-    caption: menuText,
-    contextInfo: {
-      forwardingScore: 999,
-      isForwarded: true,
-      forwardedNewsletterMessageInfo: {
-        newsletterJid: NEWSLETTER_JID,
-        newsletterName: "☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎",
-        serverMessageId: -1
-              }
-    }
-    }, { quoted: m })
-
-const _audio = menuAudio()
-if (_audio) {
-    await sleep(2000)
-    await bad.sendMessage(m.chat, {
-        audio: _audio,
-        mimetype: 'audio/mpeg',
-        ptt: false
-    }, { quoted: m })
-}
-}
-break
-
-case 'logomenu': {
-  const menuText = `
-╭━━〔 ✍️ ᴛᴇxᴛ ᴍᴀᴋᴇʀ ᴍᴇɴᴜ 〕━━┈⊷
-┃
-┃ 🎨 ʙᴀsɪᴄ
-┃ ├ ${prefix}ᴛᴇxᴛɪᴍɢ
-┃ ├ ${prefix}ᴛxᴛ2ɪᴍɢ
-┃ ├ ${prefix}ᴛᴇxᴛ2ɪᴍɢ
-┃ └ ${prefix}ᴀɪᴛᴇxᴛ
-┃
-┃ 🌟 ʟᴏɢᴏs
-┃ ├ ${prefix}ʟᴏɢᴏ
-┃ ├ ${prefix}ʟᴏɢᴏ2
-┃ ├ ${prefix}ᴍᴀᴋᴇʟᴏɢᴏ2
-┃ ├ ${prefix}ɢᴀᴍɪɴɢ
-┃ ├ ${prefix}ɢᴀᴍɪɴɢʟᴏɢᴏ
-┃ ├ ${prefix}ɢꜰx1
-┃ ├ ${prefix}ɢꜰx2
-┃ ├ ${prefix}ɢꜰx3
-┃ ├ ${prefix}ɢꜰx4
-┃ ├ ${prefix}ɢꜰx5
-┃ ├ ${prefix}ɢꜰx6
-┃ ├ ${prefix}ɢꜰx7
-┃ ├ ${prefix}ɢꜰx8
-┃ ├ ${prefix}ɢꜰx9
-┃ ├ ${prefix}ɢꜰx10
-┃ ├ ${prefix}ɢꜰx11
-┃ ├ ${prefix}ɢꜰx12
-┃ ├ ${prefix}ʙʀᴀᴛ
-┃ └ ${prefix}ꜰᴜʀʙʀᴀᴛ
-┃
-┃ ⚡ ᴇꜰꜰᴇᴄᴛs
-┃ ├ ${prefix}ɴᴇᴏɴ
-┃ ├ ${prefix}ɴᴇᴏɴᴛᴇxᴛ
-┃ ├ ${prefix}ɢʟɪᴛᴄʜ
-┃ ├ ${prefix}ɢʟɪᴛᴄʜᴛᴇxᴛ
-┃ ├ ${prefix}3ᴅᴛᴇxᴛ
-┃ ├ ${prefix}ᴛᴇxᴛ3ᴅ
-┃ ├ ${prefix}ᴄʜʀᴏᴍᴇ
-┃ ├ ${prefix}ᴍᴇᴛᴀʟ
-┃ ├ ${prefix}ʟᴜxᴜʀʏɢᴏʟᴅ
-┃ ├ ${prefix}ɢᴏʟᴅᴛᴇxᴛ
-┃ ├ ${prefix}ʀᴀɪɴʙᴏᴡ
-┃ ├ ${prefix}ʀᴀɪɴʙᴏᴡᴛᴇxᴛ
-┃ ├ ${prefix}ɢʀᴀᴅɪᴇɴᴛ
-┃ ├ ${prefix}ɢʀᴀᴅɪᴇɴᴛᴛᴇxᴛ
-┃ ├ ${prefix}ꜰɪʀᴇ
-┃ ├ ${prefix}ꜰɪʀᴇᴛᴇxᴛ
-┃ ├ ${prefix}ʟɪɢʜᴛɴɪɴɢ
-┃ ├ ${prefix}ᴛʜᴜɴᴅᴇʀ
-┃ ├ ${prefix}ᴡᴀᴛᴇʀ
-┃ ├ ${prefix}ᴡᴀᴛᴇʀᴛᴇxᴛ
-┃ ├ ${prefix}ɪᴄᴇ
-┃ ├ ${prefix}ꜰʀᴏᴢᴇɴ
-┃ ├ ${prefix}ɢᴀʟᴀxʏ
-┃ ├ ${prefix}sᴘᴀᴄᴇ
-┃ ├ ${prefix}ɢʀᴀꜰꜰɪᴛɪ
-┃ ├ ${prefix}ɢʀᴀꜰꜰɪᴛɪᴛᴇxᴛ
-┃ ├ ${prefix}ꜰʟᴏʀᴀʟ
-┃ ├ ${prefix}ꜰʟᴏᴡᴇʀs
-┃ ├ ${prefix}ʀᴇᴛʀᴏ
-┃ ├ ${prefix}ʀᴇᴛʀᴏᴛᴇxᴛ
-┃ ├ ${prefix}ʜᴏʀʀᴏʀ
-┃ └ ${prefix}sᴄᴀʀʏ
-┃
-╰━━━━━━━━━━━━━━━━━━━━━┈⊷`
-
-  await bad.sendMessage(m.chat, {
-    image: { url: 'https://i.postimg.cc/vBSV5xcw/file-00000000fad8820b868a07243e28de5d.png' },
-    caption: menuText,
-    contextInfo: {
-      forwardingScore: 999,
-      isForwarded: true,
-      forwardedNewsletterMessageInfo: {
-        newsletterJid: NEWSLETTER_JID,
-        newsletterName: "☠︎︎ 𝘿𝘼𝙉𝙂𝙀𝙍𝙊𝙐𝙎 𝙈𝘿 𝘽𝙊𝙏 ☠︎︎",
-        serverMessageId: -1
-              }
-    }
-    }, { quoted: m })
-
-const _audio = menuAudio()
-if (_audio) {
-    await sleep(2000)
-    await bad.sendMessage(m.chat, {
-        audio: _audio,
-        mimetype: 'audio/mpeg',
-        ptt: false
-    }, { quoted: m })
-}
-}
-break
+/* logomenu removed */
 
 case 'aimenu': {
   const menuText = `
@@ -2697,7 +2334,7 @@ case 'private': {
     fs.writeFileSync(botModeFile, 'private')
   } catch (e) {}
 
-  reply('✅ Privtē mode ON')
+  reply('✅ Privtē mode ON\n\nNote: Antilink/Warn will still work for other users.')
 }
 break
 
@@ -2833,7 +2470,7 @@ case 'autobio': {
 }
 break
 
-case 'setix':
+case 'setprefix':
         if (!isCreator) return reply('❌ ᴏɴʟʏ ᴏᴡɴᴇʀ ᴄᴀɴ sᴇᴛ ᴘʀᴇғɪx!')
         
         if (!text) return reply(`*ᴇxᴀᴍᴘʟᴇ:* ${prefix}setprefix .`)
