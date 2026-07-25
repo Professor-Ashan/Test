@@ -3619,7 +3619,7 @@ break
 
 case 'jid': 
 case 'chid': {
-    if (!text) return reply("Example: .jid https://whatsapp.com/channel/XXXX");
+    if (!text) return reply(m.chat);
 
     const linkPrefix = "https://whatsapp.com/channel/";
     if (!text.includes(linkPrefix)) return reply("❌ Invalid channel link.");
