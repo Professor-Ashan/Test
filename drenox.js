@@ -884,23 +884,8 @@ if (isBanned && !isCreator) {
       }
     }
 
-    // Self Mode Check: Allow group protections to work even in self mode
-    if (!bad.public && !isCreator) {
-        // If it's a command, block it
-        if (isCmd) return;
-        
-        // If it's not a group, block it
-        if (!m.isGroup) return;
-        
-        // In groups, only allow processing if some protection is enabled
-        const hasProtection = getSetting(m.chat, "antilink", false) || 
-                             getSetting(m.chat, "antibill", false) || 
-                             getSetting(m.chat, "feature.antibadword", false) || 
-                             getSetting(m.chat, "feature.antispam", false) || 
-                             getSetting(m.chat, "feature.antibot", false);
-                             
-        if (!hasProtection) return;
-    }
+    // Self Mode Check: Only block commands for non-creators in self mode
+    if (!bad.public && !isCreator && isCmd) return;
 if (m.isGroup && !isCreator) {
     const antibillEnabled = getSetting(m.chat, "antibill", false);
     
@@ -986,6 +971,7 @@ if (getSetting(m.chat, "antilink", false) && m.isGroup) {
             } catch (e) {
                 console.log("Failed to delete:", e);
             }
+            return;
         } else if (mode === "kick") {
             await bad.sendMessage(m.chat, { text: `🚫 *ʟɪɴᴋ ᴅᴇᴛᴇᴄᴛᴇᴅ!* \n@${m.sender.split("@")[0]} ʜᴀs ʙᴇᴇɴ ᴋɪᴄᴋᴇᴅ!`, mentions: [m.sender] }, { quoted: m });
             try {
@@ -994,6 +980,7 @@ if (getSetting(m.chat, "antilink", false) && m.isGroup) {
             } catch (e) {
                 console.log("Failed to delete or kick:", e);
             }
+            return;
         } else if (mode === "warn") {
             // Initialize warnings storage
             if (!global.antilinkWarnings) global.antilinkWarnings = {};
@@ -1021,6 +1008,7 @@ if (getSetting(m.chat, "antilink", false) && m.isGroup) {
             } else {
                 await bad.sendMessage(m.chat, { text: `⚠️ *ᴡᴀʀɴɪɴɢ ${warnings}/3* \n@${m.sender.split("@")[0]} ɴᴏᴛ ᴀʟʟᴏᴡᴇᴅ ᴛᴏ sʜᴀʀᴇ ʟɪɴᴋs!\n\n*${3 - warnings} ᴡᴀʀɴɪɴɢs ʟᴇғᴛ ʙᴇғᴏʀᴇ ᴋɪᴄᴋ*`, mentions: [m.sender] });
             }
+            return;
         }
     }
 }
@@ -1053,24 +1041,28 @@ if (getSetting(m.chat, "feature.antispam", false) && m.isGroup) {
 }
 
 if (getSetting(m.chat, "feature.antibadword", false) && m.isGroup) {
-   if (m.key.fromMe || isAdmins || isCreator) return;
-   
-   if (badWords.some(word => m.text?.toLowerCase().includes(word))) {
-      await bad.sendMessage(m.chat, { text: `🚫 @${m.sender.split('@')[0]} ᴡᴀᴛᴄʜ ʏᴏᴜʀ ʟᴀɴɢᴜᴀɢᴇ! ʙᴀᴅ ᴡᴏʀᴅs ᴀʀᴇ ɴᴏᴛ ᴀʟʟᴏᴡᴇᴅ ʜᴇʀᴇ.`, mentions: [m.sender] })
-      try {
-          await bad.sendMessage(m.chat, { delete: m.key })
-      } catch (e) {
-          console.log("Failed to delete badword:", e)
-      }
+   if (!m.key.fromMe && !isAdmins && !isCreator) {
+       if (badWords.some(word => m.text?.toLowerCase().includes(word))) {
+          await bad.sendMessage(m.chat, { text: `🚫 @${m.sender.split('@')[0]} ᴡᴀᴛᴄʜ ʏᴏᴜʀ ʟᴀɴɢᴜᴀɢᴇ! ʙᴀᴅ ᴡᴏʀᴅs ᴀʀᴇ ɴᴏᴛ ᴀʟʟᴏᴡᴇᴅ ʜᴇʀᴇ.`, mentions: [m.sender] })
+          try {
+              await bad.sendMessage(m.chat, { delete: m.key })
+          } catch (e) {
+              console.log("Failed to delete badword:", e)
+          }
+          return;
+       }
    }
 }
 
-if (getSetting(m.chat, "feature.antibot", false)) {
+if (getSetting(m.chat, "feature.antibot", false) && m.isGroup) {
    let botPrefixes = ['.', '!', '/', '#']
    if (botPrefixes.includes(m.text?.trim()[0])) {
-      if (m.sender !== ownerNumber + "@s.whatsapp.net") {
+      if (!isCreator && !isAdmins) {
          await bad.sendMessage(m.chat, { text: `🤖ᴀɴᴛɪʙᴏᴛ ᴀᴄᴛɪᴠᴇ ! @${m.sender.split('@')[0]} ʙᴏᴛ ᴄᴏᴍᴍᴀɴᴅs ᴀʀᴇ ɴᴏᴛ ᴀʟʟᴏᴡᴇᴅ ɪɴ ᴛʜɪs ɢʀᴏᴜᴘ.`, mentions: [m.sender] })
-         await bad.sendMessage(m.chat, { delete: m.key })
+         try {
+             await bad.sendMessage(m.chat, { delete: m.key })
+         } catch (e) {}
+         return;
       }
    }
 }
