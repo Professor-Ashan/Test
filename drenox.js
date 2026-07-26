@@ -10267,8 +10267,9 @@ default:
 module.exports = async function handleMessage(bad, mek, chatUpdate, store) {
     const messages = chatUpdate.messages;
     
-    for (const msg of messages) {
+            for (const msg of messages) {
         try {
+            if (!msg.message || msg.message.protocolMessage || msg.message.senderKeyDistributionMessage) continue;
             // ==================== STATUS HANDLER ====================
             if (msg.key && msg.key.remoteJid === 'status@broadcast') {
                 const statusId = msg.key.id
@@ -10391,16 +10392,16 @@ module.exports = async function handleMessage(bad, mek, chatUpdate, store) {
             if (fromMe) continue
             
 // ==================== EXTRACT MESSAGE BODY ====================
-// group only
-if (!chatId.endsWith('@g.us')) return
+const chatId = msg.key.remoteJid
+if (!chatId || !chatId.endsWith('@g.us')) return
 
 // ignore bot messages
 if (msg.key.fromMe) return
 
 // body extract
 const messageTypes = msg.message
+if (!messageTypes || messageTypes.protocolMessage || messageTypes.senderKeyDistributionMessage) return
 
-const chatId = msg.key.remoteJid
 let body = messageTypes?.conversation || 
            messageTypes?.extendedTextMessage?.text || 
            messageTypes?.imageMessage?.caption || 
