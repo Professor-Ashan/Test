@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
+    <title>Kashmir · Humanitarian Appeal</title>
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ----- reset & base ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0607;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.2rem;
+            font-family: 'Inter', 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            position: relative;
+        }
+
+        /* deep background glow */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 30% 20%, #2d1414 0%, #080404 95%);
+            z-index: -2;
+        }
+
+        /* ----- main card – FULL WIDTH, professional, heavy ----- */
+        .appeal-card {
+            max-width: 1400px;          /* wider */
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(14, 10, 11, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(190, 70, 70, 0.25);
+            box-shadow: 0 40px 80px -16px rgba(0,0,0,0.95), 0 0 0 1px #5f2a2a inset;
+            border-radius: 3.2rem;
+            padding: 3rem 3.2rem 2.6rem;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* subtle inner glow */
+        .appeal-card::after {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -10%;
+            width: 120%;
+            height: 60%;
+            background: radial-gradient(ellipse at 30% 40%, rgba(150, 30, 30, 0.08), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ----- flag ribbon – refined ----- */
+        .flag-ribbon {
+            display: flex;
+            height: 10px;
+            width: 100%;
+            margin-bottom: 2.5rem;
+            border-radius: 80px;
+            overflow: hidden;
+            box-shadow: 0 4px 28px rgba(180, 40, 40, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+        .flag-ribbon span {
+            flex: 1;
+            height: 100%;
+        }
+        .flag-green { background: #1a7a3a; }
+        .flag-white { background: #e8e4e0; }
+        .flag-red { background: #b31b1b; }
+
+        /* ----- Kashmir badge – premium ----- */
+        .kashmir-flag-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            background: #1a1111;
+            padding: 0.5rem 2.8rem;
+            border-radius: 100px;
+            width: fit-content;
+            margin: 0 auto 2rem auto;
+            border: 1px solid #8f3a3a;
+            box-shadow: 0 0 30px #4f1414, inset 0 0 12px #3f0a0a;
+            backdrop-filter: blur(4px);
+            position: relative;
+            z-index: 1;
+        }
+        .kashmir-flag-badge i {
+            font-size: 2.6rem;
+            color: #d4a373;
+            filter: drop-shadow(0 0 10px #b3864b);
+        }
+        .kashmir-flag-badge span {
+            font-weight: 800;
+            font-size: 2.2rem;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #f0e0c0, #c7a87b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 24px #b3864b;
+        }
+
+        /* ----- BLOOD STYLE headline – larger, stronger ----- */
+        .blood-headline {
+            font-size: 5.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            line-height: 1.05;
+            text-align: center;
+            margin: 0.2rem 0 1.4rem 0;
+            color: #a00f0f;
+            text-shadow: 
+                0 0 18px #7a0a0a,
+                0 0 40px #4f0404,
+                0 0 80px #2f0101,
+                0 0 140px #1a0000;
+            font-family: 'Impact', 'Arial Black', 'Segoe UI Black', sans-serif;
+            background: linear-gradient(180deg, #d42a2a 10%, #8a0a0a 80%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 10px 20px #2a0000);
+            transform: scale(1.01);
+            word-break: break-word;
+            position: relative;
+            z-index: 1;
+        }
+        .blood-headline i {
+            color: #b31b1b;
+            text-shadow: 0 0 32px #a00;
+            margin: 0 8px;
+        }
+
+        /* subtitle */
+        .sub-head {
+            text-align: center;
+            color: #b07979;
+            font-weight: 300;
+            letter-spacing: 6px;
+            margin-top: -0.4rem;
+            text-shadow: 0 0 24px #3f0a0a;
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+        }
+        .sub-head i {
+            color: #b33;
+        }
+        .sub-head span {
+            background: linear-gradient(135deg, #b55, #722);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 600;
+        }
+
+        /* ----- action row – NOW BELOW SUBTITLE (moved up) ----- */
+        .action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.6rem;
+            justify-content: center;
+            margin: 1.8rem 0 2.4rem 0;   /* reduced top margin, placed right under subtitle */
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: #1a0f0f;
+            border: 2px solid #8f2a2a;
+            color: #f5e6e0;
+            padding: 1.2rem 3.2rem;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1.2rem;
+            box-shadow: 0 8px 0 #3d0f0f, 0 16px 40px #1f0000;
+            transition: all 0.08s linear;
+            cursor: pointer;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            flex: 0 1 auto;
+            min-width: 240px;
+            justify-content: center;
+        }
+        .btn-primary i {
+            font-size: 1.8rem;
+            color: #d65a5a;
+        }
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 0 #4f1313, 0 24px 52px #2f0202;
+            background: #261212;
+            border-color: #b33a3a;
+        }
+        .btn-primary:active {
+            transform: translateY(5px);
+            box-shadow: 0 3px 0 #3d0f0f;
+        }
+
+        .btn-secondary {
+            background: #1a1111;
+            border: 1px solid #6d3a3a;
+            color: #dbb6b0;
+            padding: 1.2rem 2.8rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 6px 0 #2d1212, 0 10px 28px #0f0000;
+            transition: 0.08s linear;
+            cursor: pointer;
+            text-decoration: none;
+            flex: 0 1 auto;
+            min-width: 200px;
+            justify-content: center;
+            background: rgba(26, 17, 17, 0.8);
+            backdrop-filter: blur(4px);
+        }
+        .btn-secondary i {
+            color: #b66;
+            font-size: 1.4rem;
+        }
+        .btn-secondary:hover {
+            background: #261818;
+            border-color: #9f4a4a;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 0 #2d1212, 0 16px 40px #1f0000;
+        }
+        .btn-secondary:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #2d1212;
+        }
+
+        /* ----- appeal text – professional, spacious (now below buttons) ----- */
+        .appeal-text {
+            background: rgba(12, 8, 8, 0.65);
+            padding: 2.6rem 3rem;
+            border-radius: 2.6rem;
+            border-left: 6px solid #9f2d2d;
+            border-right: 6px solid #9f2d2d;
+            box-shadow: inset 0 0 60px rgba(70, 10, 10, 0.3);
+            margin: 1.8rem 0 2.6rem 0;
+            color: #f0e6e0;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .appeal-text p {
+            margin-bottom: 1.4rem;
+        }
+
+        .appeal-text strong {
+            color: #e06969;
+            font-weight: 700;
+        }
+
+        .bullet-list {
+            list-style: none;
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+        }
+        .bullet-list li {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            font-weight: 500;
+            background: rgba(50, 20, 20, 0.2);
+            padding: 0.7rem 2rem 0.7rem 1.4rem;
+            border-radius: 80px;
+            border-left: 4px solid #c0392b;
+            backdrop-filter: blur(2px);
+            font-size: 1.05rem;
+        }
+        .bullet-list li i {
+            color: #d94f4f;
+            font-size: 1.4rem;
+            min-width: 2.2rem;
+            text-shadow: 0 0 16px #b33;
+        }
+
+        .quote-block {
+            font-style: italic;
+            border-top: 1px solid #5f2a2a;
+            padding-top: 1.6rem;
+            color: #dbb6b0;
+            font-size: 1.08rem;
+        }
+        .quote-block i.fa-quote-left,
+        .quote-block i.fa-quote-right {
+            color: #b44;
+            margin: 0 6px;
+        }
+
+        /* ----- footer – elegant & wide ----- */
+        .footer-note {
+            margin-top: 2.4rem;
+            display: flex;
+            justify-content: center;
+            gap: 3.6rem;
+            flex-wrap: wrap;
+            color: #997a7a;
+            font-size: 1rem;
+            border-top: 1px solid #3f2525;
+            padding-top: 2rem;
+            letter-spacing: 0.4px;
+            position: relative;
+            z-index: 1;
+        }
+        .footer-note i {
+            color: #a55454;
+            margin-right: 10px;
+        }
+
+        .flag-mini {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 1.8rem;
+            opacity: 0.6;
+            position: relative;
+            z-index: 1;
+        }
+        .flag-mini i {
+            font-size: 2.4rem;
+            filter: drop-shadow(0 0 10px #441111);
+        }
+
+        /* ----- responsive – full width adaptation ----- */
+        @media (max-width: 900px) {
+            .appeal-card {
+                padding: 2rem 1.8rem;
+                border-radius: 2.4rem;
+            }
+            .blood-headline {
+                font-size: 3.8rem;
+            }
+            .kashmir-flag-badge span {
+                font-size: 1.8rem;
+            }
+            .appeal-text {
+                padding: 1.8rem;
+                font-size: 1.05rem;
+            }
+            .btn-primary, .btn-secondary {
+                min-width: 180px;
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+            .action-row {
+                margin: 1.4rem 0 2rem 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .appeal-card {
+                padding: 1.4rem 1.2rem;
+                border-radius: 2rem;
+            }
+            .blood-headline {
+                font-size: 2.8rem;
+            }
+            .kashmir-flag-badge {
+                padding: 0.3rem 1.4rem;
+                gap: 0.8rem;
+            }
+            .kashmir-flag-badge span {
+                font-size: 1.4rem;
+                letter-spacing: 2px;
+            }
+            .kashmir-flag-badge i {
+                font-size: 2rem;
+            }
+            .sub-head {
+                font-size: 1rem;
+                letter-spacing: 3px;
+            }
+            .appeal-text {
+                padding: 1.2rem;
+                font-size: 0.95rem;
+                border-left-width: 4px;
+                border-right-width: 4px;
+            }
+            .bullet-list li {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+                gap: 0.8rem;
+            }
+            .bullet-list li i {
+                font-size: 1.1rem;
+                min-width: 1.6rem;
+            }
+            .btn-primary, .btn-secondary {
+                min-width: 150px;
+                padding: 0.8rem 1.4rem;
+                font-size: 1rem;
+                gap: 0.6rem;
+            }
+            .btn-primary i {
+                font-size: 1.4rem;
+            }
+            .footer-note {
+                gap: 1.2rem;
+                font-size: 0.85rem;
+                flex-direction: column;
+                align-items: center;
+            }
+            .flag-mini i {
+                font-size: 1.8rem;
+            }
+            .action-row {
+                margin: 1rem 0 1.6rem 0;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .blood-headline {
+                font-size: 2.2rem;
+            }
+            .appeal-card {
+                padding: 1rem 0.8rem;
+            }
+        }
+
+        /* small touches */
+        .glow {
+            text-shadow: 0 0 24px #a33;
+        }
+        .text-soft {
+            color: #dbb6b0;
+        }
+        .fas.fa-flag {
+            color: #d4a373;
+        }
+    </style>
+</head>
+<body>
+
+<div class="appeal-card">
+
+    <!-- Kashmir flag ribbon -->
+    <div class="flag-ribbon">
+        <span class="flag-green"></span>
+        <span class="flag-white"></span>
+        <span class="flag-red"></span>
+        <span class="flag-white"></span>
+        <span class="flag-green"></span>
+    </div>
+
+    <!-- Kashmir badge -->
+    <div class="kashmir-flag-badge">
+        <i class="fas fa-flag"></i>
+        <span>KASHMIR</span>
+        <i class="fas fa-flag"></i>
+    </div>
+
+    <!-- blood style headline -->
+    <h1 class="blood-headline">
+        <i class="fas fa-tint"></i> 
+        BLOOD &amp; DIGNITY 
+        <i class="fas fa-tint"></i>
+    </h1>
+    <div class="sub-head">
+        <i class="fas fa-heartbeat"></i> 
+        <span>HUMANITY OVER HATE</span>
+        <i class="fas fa-heartbeat"></i>
+    </div>
+
+    <!-- ACTION ROW – MOVED UP: directly under "Humanity Over Hate" -->
+    <div class="action-row">
+        <!-- primary: send appeal via email with all recipients pre-filled -->
+        <a href="mailto:secretary@mohr.gov.pk,helpline@mohr.gov.pk,info@ohchr.org,ohchr-registry@un.org,press@amnesty.org,hrwnyc@hrw.org,info@fidh.org,info@civicus.org?subject=Urgent%20Humanitarian%20Appeal%20for%20the%20Protection%20of%20Civilians%20and%20Restoration%20of%20Essential%20Services%20in%20Kashmir&body=Dear%20Sir%2FMadam%2C%0D%0A%0D%0AI%20am%20writing%20to%20respectfully%20urge%20your%20immediate%20attention%20to%20the%20humanitarian%20situation%20affecting%20civilians%20in%20Kashmir.%0D%0A%0D%0AEvery%20human%20being%20has%20the%20fundamental%20right%20to%20life%2C%20dignity%2C%20safety%2C%20food%2C%20healthcare%2C%20and%20communication.%20Innocent%20civilians%20should%20never%20be%20made%20to%20suffer%20because%20of%20conflict%20or%20political%20disputes.%0D%0A%0D%0AI%20respectfully%20request%20that%20all%20relevant%20authorities%20and%20humanitarian%20organizations%20take%20urgent%20steps%20to%3A%0D%0A%0D%0A-%20Protect%20the%20lives%20and%20safety%20of%20all%20civilians.%0D%0A-%20Ensure%20uninterrupted%20access%20to%20food%2C%20clean%20water%2C%20medicine%2C%20and%20other%20essential%20humanitarian%20aid.%0D%0A-%20Restore%20internet%20and%20communication%20services%20wherever%20they%20have%20been%20suspended%2C%20so%20families%20can%20remain%20connected%20and%20people%20can%20access%20emergency%20information.%0D%0A-%20Respect%20and%20uphold%20the%20human%20rights%20and%20dignity%20of%20every%20civilian%20without%20discrimination.%0D%0A-%20Support%20peaceful%20dialogue%20and%20every%20possible%20effort%20to%20reduce%20suffering%20and%20protect%20innocent%20lives.%0D%0A%0D%0AWe%20are%20not%20asking%20for%20violence.%20We%20are%20asking%20for%20peace%2C%20justice%2C%20and%20basic%20human%20rights.%20We%20are%20not%20terrorists.%20We%20are%20human%20beings%20who%20deserve%20the%20same%20rights%2C%20dignity%2C%20and%20protection%20as%20every%20other%20person.%0D%0A%0D%0AWe%20sincerely%20request%20your%20intervention%20and%20humanitarian%20support.%20Please%20help%20ensure%20that%20innocent%20civilians%20receive%20the%20protection%20and%20assistance%20they%20need.%0D%0A%0D%0AHistory%20will%20remember%20those%20who%20chose%20to%20protect%20human%20life%20and%20stand%20for%20peace.%0D%0A%0D%0AThank%20you%20for%20your%20time%20and%20consideration.%20I%20hope%20you%20will%20take%20this%20appeal%20seriously%20and%20act%20with%20urgency.%0D%0A%0D%0ARespectfully%2C%0D%0A%0D%0AA%20concerned%20citizen" class="btn-primary" target="_blank">
+            <i class="fas fa-envelope-open-text"></i> Submit Appeal
+        </a>
+
+        <!-- secondary: copy recipients -->
+        <button class="btn-secondary" onclick="copyEmails()">
+            <i class="fas fa-copy"></i> Copy Recipients
+        </button>
+    </div>
+
+    <!-- appeal text (now below the buttons) -->
+    <div class="appeal-text">
+        <p><i class="fas fa-exclamation-triangle" style="color:#d94f4f; margin-right:14px;"></i> <strong>Urgent Humanitarian Appeal</strong> — Every human being has the fundamental right to life, dignity, safety, food, healthcare, and communication. Innocent civilians should never be made to suffer because of conflict or political disputes.</p>
+        
+        <ul class="bullet-list">
+            <li><i class="fas fa-shield-alt"></i> Protect the lives and safety of all civilians.</li>
+            <li><i class="fas fa-utensils"></i> Ensure uninterrupted access to food, clean water, medicine, and essential humanitarian aid.</li>
+            <li><i class="fas fa-wifi"></i> Restore internet and communication services wherever suspended, so families can remain connected.</li>
+            <li><i class="fas fa-hand-holding-heart"></i> Respect and uphold the human rights and dignity of every civilian without discrimination.</li>
+            <li><i class="fas fa-handshake"></i> Support peaceful dialogue and every possible effort to reduce suffering.</li>
+        </ul>
+
+        <div class="quote-block">
+            <i class="fas fa-quote-left"></i> 
+            We are not asking for violence. We are asking for peace, justice, and basic human rights. 
+            We are not terrorists. We are human beings who deserve the same rights, dignity, and protection as every other person.
+            <i class="fas fa-quote-right"></i>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div class="footer-note">
+        <span><i class="fas fa-clock"></i> History will remember those who chose to protect human life and stand for peace.</span>
+        <span><i class="fas fa-dove"></i> #JusticeForKashmir</span>
+    </div>
+
+    <!-- mini flags -->
+    <div class="flag-mini">
+        <i class="fas fa-flag" style="color:#1b7e3a;"></i>
+        <i class="fas fa-flag" style="color:#e8e4e0; text-shadow:0 0 12px #bbb;"></i>
+        <i class="fas fa-flag" style="color:#b31b1b;"></i>
+    </div>
+</div>
+
+<!-- copy emails script -->
+<script>
+    function copyEmails() {
+        const emails = 'secretary@mohr.gov.pk, helpline@mohr.gov.pk, info@ohchr.org, ohchr-registry@un.org, press@amnesty.org, hrwnyc@hrw.org, info@fidh.org, info
